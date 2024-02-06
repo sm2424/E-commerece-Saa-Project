@@ -23,20 +23,21 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Deploy via SCP
+      - name: SSH testing
         run: |
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          
           touch ~/.ssh/known_host
           ssh-keyscan -H "${{secrets.EC2_HOST}}" 2>&1 >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }}
           rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
-          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && pwd && npm install"
           
+          
+      - name: Testing
+        run: |
+          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "pwd"
+          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && npm install && pm2 restart app.js "
+
+
       
-
-
-      # - name: Install dependencies
-      # run: npm install && pwd && ls -ltra 
