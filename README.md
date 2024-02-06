@@ -8,7 +8,9 @@ Nodejs-Ejs-Express
       
       node -v
 
-git clone
+      git clone
+
+      cd E-commerece-Saas-Project
 
       sudo apt install npm
       
