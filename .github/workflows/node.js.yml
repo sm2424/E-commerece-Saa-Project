@@ -29,4 +29,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm v
+    - run: npm view express
+    - run: npm view E-commerece-SaaS-Project
+
