@@ -13,10 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
+      - name: Setup SSH key
+        run: echo "$EC2_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 
       - name: Install Node.js and npm
         uses: actions/setup-node@v2
@@ -30,5 +28,5 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          scp -i ${{ secrets.EC2_PRIVATE_KEY }} -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
-          ssh -i ${{ secrets.EC2_PRIVATE_KEY }} -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'cd /home/ubuntu/E-commerece-SaaS-Project && npm install --production && pm2 restart app.js'
+          scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} 'cd /home/ubuntu/E-commerece-SaaS-Project && npm install --production && pm2 restart app.js'
