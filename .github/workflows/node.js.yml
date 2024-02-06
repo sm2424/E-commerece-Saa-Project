@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: "."  # Path to your project files
-          target: "/home/ubuntu/E-commerece-SaaS-Project"  # Path to your project directory on EC2
+          target: "/home/ubuntu/E-commerece-SaaS-Project"  
       
       # - name: SSH into EC2 instance and deploy
       #   uses: appleboy/ssh-action@master
