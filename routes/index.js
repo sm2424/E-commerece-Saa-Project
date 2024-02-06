@@ -163,7 +163,7 @@ router.post('/sendmsg', function (req, res, next) {
     .catch((error) => {
       // console.log(error);
       res.status(500).json({ success: false, message: 'Failed to send WhatsApp message.' });
-      console.log(error.response?.data);
+      console.log(error.response.data);
     });
 });
 
