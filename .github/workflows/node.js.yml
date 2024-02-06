@@ -26,8 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm install && pwd && ls -ltra  
 
-      # - name: Deploy via SCP
-      #   run: |
-      #     echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
-      #     chmod 600 private_key.pem
+      - name: Deploy via SCP
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ls -ltra
       #     scp -i private_key.pem -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
