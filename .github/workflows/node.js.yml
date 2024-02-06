@@ -11,15 +11,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [20.11.0]
-        
-        
-
+   
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -30,6 +26,11 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm view express
+    
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
     - run: npm start
     
 
