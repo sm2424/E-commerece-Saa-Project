@@ -42,12 +42,12 @@
             <div>
               <div><a class="logo text-start" href="/"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
               <div class="login-main"> 
-                <form action="/submit" method="post" id="myForm">
+                <form action="/get-otp" method="post" id="myForm">
                   <h4>Sign in to account</h4>
                   <p>Enter your phone number</p>
                   <div class="form-group">
                     <label class="col-form-label">Mobile Number</label>
-                    <input class="form-control" type="tel" id="mobileNumber" required="" placeholder="xxxxxxxxxx" pattern="\d{10}" title="Please enter a valid 10-digit mobile number">
+                    <input class="form-control" type="tel" id="mobileNumber" required="" placeholder="xxxxxxxxxx" pattern="\d{10}" title="Please enter a valid 10-digit mobile number" name="mobilenumber">
                     <div id="mobileNumberError" class="text-danger"></div>
                   </div>
                                  
@@ -81,40 +81,22 @@
       <!-- Theme js-->
       <script src="../assets/js/script.js"></script>
       <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-
-          // Validate mobile number length
+        function validateMobileNumber() {
           var mobileNumberInput = document.getElementById('mobileNumber');
-          var mobileNumberError = document.getElementById('mobileNumberError');
-
-          if (mobileNumberInput.value.length !== 10) {
-            mobileNumberError.textContent = 'Invalid mobile number. Please enter a 10-digit mobile number.';
-          } else {
-            mobileNumberError.textContent = ''; // Clear any previous error messages
-            window.location.href = '/otp-page';
-          }
-        });
-      </script>
-      <!-- <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-          
-          event.preventDefault();
+          var mobileNumber = mobileNumberInput.value;
     
-          
-          window.location.href = '/otp-page';
-        });
-      </script> -->
-
-      <!-- <script>
-        $(document).on('click', '#error', function(e) {
-          if($('.email').val() == '' || $('.pwd').val() == ''){
-          swal(
-            "Error!", "Sorry, looks like some data are not filled, please try again !", "error"           
-          )
+          // Check if the mobile number is 10 digits
+          if (mobileNumber.length === 10 && /^\d+$/.test(mobileNumber)) {
+            
+            
+            return true;
+          } else {
+            alert('Please enter a valid 10-digit mobile number.');
+            return false;
           }
-        });
-      </script> -->
+        }
+      </script>
+      
     </div>
   </body>
 </html>

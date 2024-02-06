@@ -3,44 +3,118 @@ var router = express.Router();
 const axios = require('axios');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('login', { title: 'Express' });
+router.get('/', (req, res) => {
+  res.render('login');
 });
 
-router.get('/dashboard-02', function (req, res, next) {
-  res.render('dashboard-02');
+
+
+router.post('/get-otp', (req, res) => {
+  
+  console.log(req.body)
+  const enteredMobileNumber = req.body.mobilenumber;
+  // Validate if the provided mobile number has exactly 10 digits and is '1234567890'
+  if (enteredMobileNumber === '1234567890') {
+    // Valid mobile number, generate and send OTP (skipping for simplicity)
+    req.session.mobileNumber = enteredMobileNumber;
+    res.render('otp');
+  } else {
+    res.render('login', { error: 'Invalid mobile number. Please enter the correct mobile number (1234567890).' });
+  }
+});
+
+
+
+
+
+
+router.post('/verify-otp', (req, res) => {
+  const enteredOTP = req.body.otp;
+
+  // Check if the provided OTP is valid
+  if (enteredOTP === '123456' ) {
+    // Valid OTP, user is authenticated
+    req.session.isAuthenticated = true;
+    req.session.username = 'shiv'; // Set username to 'shiv'
+    res.redirect('/dashboard');
+  } else {
+    res.render('otp-page', { error: 'Invalid OTP. Please try again.' });
+  }
+});
+
+router.get('/dashboard', function (req, res, next) {
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobileNumber = req.session.mobileNumber;
+
+    res.render('dashboard', { username: req.session.username, mobileNumber: mobileNumber });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
 });
 
 
 router.get('/list-products', function (req, res, next) {
-  res.render('list-products');
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobileNumber = req.session.mobileNumber;
+    
+    res.render('list-products', { username: req.session.username, mobileNumber: mobileNumber });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
 });
 
 router.get('/order-history', function (req, res, next) {
-  res.render('order-history');
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobileNumber = req.session.mobileNumber;
+    
+    res.render('order-history', { username: req.session.username, mobileNumber: mobileNumber });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
 });
 
 router.get('/private-chat', function (req, res, next) {
-  res.render('private-chat');
+
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobileNumber = req.session.mobileNumber;
+    
+    res.render('private-chat', { username: req.session.username, mobileNumber: mobileNumber });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
 });
 
 router.get('/contacts', function (req, res, next) {
-  res.render('contacts');
-});
-
-router.get('/login', function (req, res, next) {
-  res.render('login');
-});
-
-router.get('/otp-page', function (req, res, next) {
-  res.render('otp-page');
+// Check if the user is authenticated before rendering the dashboard
+if (req.session.isAuthenticated) {
+  const mobileNumber = req.session.mobileNumber;
+  
+  res.render('contacts', { username: req.session.username, mobileNumber: mobileNumber });
+} else {
+  // Redirect to login if not authenticated
+  res.redirect('/');
+}  
 });
 
 router.get('/settings', function (req, res, next) {
-  res.render('settings');
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobileNumber = req.session.mobileNumber;
+    
+    res.render('settings', { username: req.session.username, mobileNumber: mobileNumber });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
 });
-
-
 
 router.post('/sendmsg', function (req, res, next) {
 
@@ -90,6 +164,16 @@ router.post('/sendmsg', function (req, res, next) {
       res.status(500).json({ success: false, message: 'Failed to send WhatsApp message.' });
       console.log(error.response?.data);
     });
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+    } else {
+      res.redirect('/');
+    }
+  });
 });
 
 module.exports = router;

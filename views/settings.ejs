@@ -27,8 +27,6 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/animate.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/js-datatables/style.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/owlcarousel.css">
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
@@ -57,12 +55,10 @@
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
-      <%- include('header');-%>
-	  
+      <%- include('header'); -%>
       <!-- Page Header Ends                              -->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
-        <!-- Page Sidebar Start-->
         <%- include('sidebarpannel'); -%>
         <!-- Page Sidebar Ends-->
         <div class="page-body">
@@ -70,45 +66,79 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h4>
-                     </h4>
+                  <h3>Settings</h3>
                 </div>
                 <div class="col-6">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">                                       
+                    <li class="breadcrumb-item"><a href="index.html">                                       
                         <svg class="stroke-icon">
                           <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
                         </svg></a></li>
-                    <li class="breadcrumb-item">ECommerce</li>
-                    <li class="breadcrumb-item active">Product list</li>
+                    <li class="breadcrumb-item">Users</li>
+                    <li class="breadcrumb-item active"> Settings</li>
                   </ol>
                 </div>
               </div>
             </div>
           </div>
           <!-- Container-fluid starts-->
-
-          
-          <div class="page-wrapper compact-wrapper" id="pageWrapper">
-            
-            <div class="error-wrapper">
-              <div class="container">
-                  <div class="col-md-8 offset-md-2">
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-4">
                   
-              
-
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-8">
+                  <form class="card">
                     
-              </div>
-                <div><a class="btn btn-info-gradien btn-lg" href="/">BACK TO HOME PAGE</a></div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-5">
+                          <div class="mb-3">
+                            <label class="form-label">Phone Number ID</label>
+                            <input class="form-control" type="text" placeholder="Phone Number ID">
+                            
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="col-sm-6 col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Permeant Access Token </label>
+                            <input class="form-control" type="text" placeholder="Permeant Access Token">
+                          </div>
+                        </div>
+                       
+                       
+                       
+                       
+                       
+                        
+                    <div class="card-footer text-end">
+                      <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                  </form>
+                </div>
+               
               </div>
             </div>
-        
-            
+          </div>
+          <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
-        
+        <%- include('footer'); -%>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12 footer-copyright text-center">
+                <p class="mb-0">Copyright 2023 © Cuba theme by pixelstrap  </p>
+              </div>
+            </div>
+          </div>
+       
       </div>
-      <%- include('footer'); -%>
     </div>
     <!-- latest jquery-->
     <script src="../assets/js/jquery.min.js"></script>
@@ -128,11 +158,6 @@
     <script src="../assets/js/slick/slick.min.js"></script>
     <script src="../assets/js/slick/slick.js"></script>
     <script src="../assets/js/header-slick.js"></script>
-    <script src="../assets/js/js-datatables/simple-datatables@latest.js"></script>
-    <script src="../assets/js/custom-list-product.js"></script>
-    <script src="../assets/js/owlcarousel/owl.carousel.js"></script>
-    <script src="../assets/js/ecommerce.js"></script>
-    <script src="../assets/js/tooltip-init.js"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="../assets/js/script.js"></script>
