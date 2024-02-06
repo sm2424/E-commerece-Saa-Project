@@ -35,4 +35,5 @@ jobs:
           ssh-keyscan -H "${{secrets.EC2_HOST}}" 2>&1 >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "ls -l"
+          rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
       #     scp -i private_key.pem -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
