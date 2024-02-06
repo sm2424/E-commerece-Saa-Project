@@ -26,11 +26,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm view express
+    - run: mpm start
     
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - run: npm start
+  
     
 
