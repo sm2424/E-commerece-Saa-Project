@@ -31,10 +31,10 @@ jobs:
           touch ~/.ssh/known_host
           ssh-keyscan -H "${{secrets.EC2_HOST}}" 2>&1 >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
-          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "ls -ltra"
+          ssh -i private_key.pem root@${{ secrets.EC2_HOST }}
           rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
-          cd E-commerece-SaaS-Project
-          ls
+          root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project" "pwd"
+          
       #     scp -i private_key.pem -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
 
 
