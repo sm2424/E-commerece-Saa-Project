@@ -34,7 +34,7 @@ jobs:
           rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
           
           
-      - name: Testing
+      - name: Deploy
         run: |
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "pwd"
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && npm install && pm2 restart app.js "
