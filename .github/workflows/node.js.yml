@@ -33,7 +33,7 @@ jobs:
           cat ~/.ssh/known_hosts
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }}
           rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
-          root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project" "pwd"
+          root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && pwd && npm install "
           
       #     scp -i private_key.pem -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
 
