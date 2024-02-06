@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
-        
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -16,15 +17,17 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
-      
+
       - name: Install Node.js and npm
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
-      
+
       - name: Install dependencies
         run: npm install
+
       
+
       - name: Deploy via SSH
         run: |
           scp -i ${{ secrets.EC2_PRIVATE_KEY }} -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/E-commerece-SaaS-Project
