@@ -33,7 +33,7 @@ jobs:
           cat ~/.ssh/known_hosts
           ssh -i private_key.pem root@${{ secrets.EC2_HOST }}
           rsync -arvzh --info=progress2 . root@${{ secrets.EC2_HOST }}:/root/E-commerece-SaaS-Project
-          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && pwd && npm install "
+          ssh -i private_key.pem root@${{ secrets.EC2_HOST }} "cd E-commerece-SaaS-Project && pwd && npm install"
           
       
 
