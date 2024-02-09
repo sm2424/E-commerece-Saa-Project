@@ -3,12 +3,33 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mysql = require('mysql');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const session = require('express-session');
 
 let PORT = 3000;
+
+
+
+// Create a connection to the database
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'e-commerece-saas-project'
+});
+// Connect to the database
+db.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log('MySQL Connected...');
+});
+
+global.db = db;
 
 const app = express();
 

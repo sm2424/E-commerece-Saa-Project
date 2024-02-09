@@ -11,18 +11,31 @@ router.get('/', (req, res) => {
 
 
 router.post('/get-otp', (req, res) => {
-  
-  console.log(req.body)
-  const enteredMobileNumber = req.body.mobilenumber;
-  // Validate if the provided mobile number has exactly 10 digits and is '1234567890'
-  if (enteredMobileNumber === '1234567890') {
-    // Valid mobile number, generate and send OTP (skipping for simplicity)
-    req.session.mobileNumber = enteredMobileNumber;
-    res.render('otp');
-  } else {
-    res.render('login', { error: 'Invalid mobile number. Please enter the correct mobile number (1234567890).' });
-  }
+  const enteredmobile_number = req.body.mobile_number;
+
+  // Check if the mobile number exists in the database
+  const sqlCheckMobile = 'SELECT * FROM users WHERE mobile_number = ?';
+  db.query(sqlCheckMobile, [enteredmobile_number], (err, result) => {
+      if (err) {
+          console.error('Error checking mobile number:', err);
+          res.render('login', { error: 'An error occurred. Please try again.' });
+      } else {
+          if (result.length > 0) {
+              const username = result[0].username;
+              req.session.isAuthenticated = true;
+              req.session.mobile_number = enteredmobile_number;
+              req.session.username = username;
+              res.redirect('/dashboard');
+          } else {
+              // Handle the case where the mobile number doesn't exist
+              // Redirect to OTP page or render an error message
+          }
+      }
+  });
 });
+
+
+
 
 
 
@@ -46,9 +59,9 @@ router.post('/verify-otp', (req, res) => {
 router.get('/dashboard', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobileNumber = req.session.mobileNumber;
+    const mobile_number = req.session.mobile_number;
 
-    res.render('dashboard', { username: req.session.username, mobileNumber: mobileNumber });
+    res.render('dashboard', { username: req.session.username, mobile_number: mobile_number });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -59,9 +72,9 @@ router.get('/dashboard', function (req, res, next) {
 router.get('/list-products', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobileNumber = req.session.mobileNumber;
+    const mobile_number = req.session.mobile_number;
     
-    res.render('list-products', { username: req.session.username, mobileNumber: mobileNumber });
+    res.render('list-products', { username: req.session.username, mobile_number: mobile_number });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -71,9 +84,9 @@ router.get('/list-products', function (req, res, next) {
 router.get('/order-history', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobileNumber = req.session.mobileNumber;
+    const mobile_number = req.session.mobile_number;
     
-    res.render('order-history', { username: req.session.username, mobileNumber: mobileNumber });
+    res.render('order-history', { username: req.session.username, mobile_number: mobile_number });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -84,9 +97,9 @@ router.get('/private-chat', function (req, res, next) {
 
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobileNumber = req.session.mobileNumber;
+    const mobile_number = req.session.mobile_number;
     
-    res.render('private-chat', { username: req.session.username, mobileNumber: mobileNumber });
+    res.render('private-chat', { username: req.session.username, mobile_number: mobile_number });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -96,21 +109,65 @@ router.get('/private-chat', function (req, res, next) {
 router.get('/contacts', function (req, res, next) {
 // Check if the user is authenticated before rendering the dashboard
 if (req.session.isAuthenticated) {
-  const mobileNumber = req.session.mobileNumber;
+  const mobile_number = req.session.mobile_number;
   
-  res.render('contacts', { username: req.session.username, mobileNumber: mobileNumber });
+  res.render('contacts', { username: req.session.username, mobile_number: mobile_number });
 } else {
   // Redirect to login if not authenticated
   res.redirect('/');
 }  
 });
 
+router.get('/edit-profile', function (req, res, next) {
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobile_number = req.session.mobile_number;
+    
+    res.render('settings', { username: req.session.username, mobile_number: mobile_number });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }  
+  });
+
+router.post('/save-settings', (req, res) => {
+  const { name, phoneNumberId, accessToken } = req.body;
+
+  // Assuming you have a database connection named 'connection'
+
+  // Insert the data into your database
+  const sql = 'INSERT INTO settings (name, phoneNumberId, accessToken) VALUES (?, ?, ?)';
+  connection.query(sql, [name, phoneNumberId, accessToken], (error, results, fields) => {
+    if (error) {
+      console.error('Error saving settings:', error);
+      res.status(500).send('Error saving settings');
+      return;
+    }
+
+    res.send('Settings saved successfully');
+  });
+});
+
 router.get('/settings', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobileNumber = req.session.mobileNumber;
+    const mobile_number = req.session.mobile_number;
     
-    res.render('settings', { username: req.session.username, mobileNumber: mobileNumber });
+    res.render('settings', { mobile_number: mobile_number });
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/');
+  }
+});
+
+
+
+router.get('/account', function (req, res, next) {
+  // Check if the user is authenticated before rendering the dashboard
+  if (req.session.isAuthenticated) {
+    const mobile_number = req.session.mobile_number;
+    
+    res.render('account', { username: req.session.username, mobile_number: mobile_number });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -119,7 +176,7 @@ router.get('/settings', function (req, res, next) {
 
 router.post('/sendmsg', function (req, res, next) {
 
-  const recipientPhoneNumber = req.body.mobileNumber;
+  const recipientPhoneNumber = req.body.mobile_number;
   const messageContent = req.body.message;
 
   if (!recipientPhoneNumber || !messageContent) {
