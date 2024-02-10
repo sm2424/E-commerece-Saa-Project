@@ -90,42 +90,7 @@
               </div>
             </div>
 
-            <table class="table">
-              <tbody>
-                <form action="/save-profile" method="POST">
-
-                  <tr>
-                    <td>Name:</td>
-                    <td><input type="text" id="name" name="name" value="<%= username %>" required></td>
-                  </tr>
-                  <tr>
-                    <td>Mobile Number:</td>
-                    <td>
-                      <%= mobile_number %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Phone Number ID:</td>
-                    <td><input type="text" id="phone_number_id" name="phone_number_id" value="<%= phone_number_id %>"
-                        required></td>
-                  </tr>
-                  <tr>
-                    <td> Permeant Access Token:</td>
-                    <td> <input type="text" id="pat" name="pat" value="<%= pat %>" required></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div class="card-footer text-center"> <!-- Changed to text-center for center alignment -->
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <form action="/view-profile" method="GET">
-                          <button class="btn btn-primary" input type="submit">Back</button>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-                </form>
-              </tbody>
-            </table>
+            
 
             <!-- Container-fluid starts -->
             <div class="container-fluid">
@@ -140,11 +105,46 @@
               </div>
 
               <div class="col-xl-12">
-                <form class="card">
+                <div class="card">
                   <div class="card-body">
-                    How to add table in container
+                    <table class="table">
+                      <tbody>
+                        <form action="/save-profile" method="POST">
+        
+                          <tr>
+                            <td>Name:</td>
+                            <td><input type="text" id="name" name="name" value="<%= username %>" required></td>
+                          </tr>
+                          <tr>
+                            <td>Mobile Number:</td>
+                            <td>
+                              <%= mobile_number %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Phone Number ID:</td>
+                            <td><input type="text" id="phone_number_id" name="phone_number_id" value="<%= phone_number_id %>"
+                                required></td>
+                          </tr>
+                          <tr>
+                            <td> Permeant Access Token:</td>
+                            <td> <input type="text" id="pat" name="pat" value="<%= pat %>" required></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <div class="card-footer text-center"> <!-- Changed to text-center for center alignment -->
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <form action="/view-profile" method="GET">
+                                  <button class="btn btn-primary" input type="submit">Back</button>
+                                </form>
+                              </div>
+                            </td>
+                          </tr>
+                        </form>
+                      </tbody>
+                    </table>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
             <!-- Container-fluid Ends -->

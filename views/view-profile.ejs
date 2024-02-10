@@ -93,47 +93,7 @@
               </div>
             </div>
 
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>Name:</td>
-                  <td>
-                    <%= username %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Mobile Number:</td>
-                  <td>
-                    <%= mobile_number %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Phone Number ID:</td>
-                  <td>
-                    <%= phone_number_id %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Permeant Access Token:</td>
-                  <td>
-                    <%= pat %>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <div class="card-footer text-center"> <!-- Changed to text-center for center alignment -->
-                      <form action="/edit-profile" method="GET">
-                        <button class="btn btn-primary" type="submit">Edit</button>
-                      </form>
-
-
-                    </div>
-                  </td>
-                </tr>
-
-              </tbody>
-
-            </table>
+            
 
 
             
@@ -150,11 +110,51 @@
               </div>
 
               <div class="col-xl-12">
-                <form class="card">
+                <div class="card">
                   <div class="card-body">
-                    How to add table in container
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>Name:</td>
+                          <td>
+                            <%= username %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mobile Number:</td>
+                          <td>
+                            <%= mobile_number %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Phone Number ID:</td>
+                          <td>
+                            <%= phone_number_id %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Permeant Access Token:</td>
+                          <td>
+                            <%= pat %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <div class="card-footer text-center"> <!-- Changed to text-center for center alignment -->
+                              <form action="/edit-profile" method="GET">
+                                <button class="btn btn-primary" type="submit">Edit</button>
+                              </form>
+        
+        
+                            </div>
+                          </td>
+                        </tr>
+        
+                      </tbody>
+        
+                    </table>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
             <!-- Container-fluid Ends -->
