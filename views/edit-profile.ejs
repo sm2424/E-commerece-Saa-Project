@@ -110,7 +110,10 @@
                     <table class="table">
                       <tbody>
                         <form action="/save-profile" method="POST">
-        
+                          <tr>
+                            <td>Organization Name:</td>
+                            <td><input type="text" id="org_name" name="org_name" value="<%= org_name %>" ></td>
+                          </tr>
                           <tr>
                             <td>Name:</td>
                             <td><input type="text" id="name" name="name" value="<%= username %>" required></td>

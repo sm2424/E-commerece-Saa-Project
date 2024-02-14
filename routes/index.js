@@ -165,8 +165,8 @@ router.get('/view-profile', (req, res) => {
         res.render('error', { error: 'An error occurred while fetching user details.' });
       } else {
         if (result.length > 0) {
-          const { username, phone_number_id, pat } = result[0];
-          res.render('view-profile', { mobile_number, username, phone_number_id, pat });
+          const { username, phone_number_id, pat, org_name } = result[0];
+          res.render('view-profile', { mobile_number, username, phone_number_id, pat, org_name });
         } else {
           res.render('error', { error: 'User not found.' });
         }
@@ -180,13 +180,13 @@ router.get('/view-profile', (req, res) => {
 router.post('/save-profile', (req, res) => {
   // Check if the user is authenticated
   if (req.session.isAuthenticated) {
-    const { name, phone_number_id, pat } = req.body;
+    const { name, phone_number_id, pat, org_name } = req.body;
     const mobile_number = req.session.mobile_number;
     const username = req.session.username; // Assuming username is stored in session
 
     // Update profile details in the database
-    const sql = 'UPDATE users SET username = ?, phone_number_id = ?, pat = ? WHERE mobile_number = ?';
-    db.query(sql, [name, phone_number_id, pat, mobile_number], (err, result) => {
+    const sql = 'UPDATE users SET username = ?, phone_number_id = ?, pat = ?, org_name = ? WHERE mobile_number = ?';
+    db.query(sql, [name, phone_number_id, pat, org_name, mobile_number], (err, result) => {
       if (err) {
         console.error('Error updating profile:', err);
         res.render('error', { error: 'An error occurred while updating profile.' });
@@ -206,7 +206,7 @@ router.post('/save-profile', (req, res) => {
               // Update session with the new username
               req.session.username = newUsername;
               // Redirect to profile page or any other appropriate page
-              console.log('Profile updated successfullysucessful');
+              console.log('Profile updated successfully');
               res.redirect('/view-profile');
 
             } else {
@@ -235,8 +235,8 @@ router.get('/edit-profile', (req, res) => {
         res.render('error', { error: 'An error occurred while fetching user details.' });
       } else {
         if (result.length > 0) {
-          const { username, phone_number_id, pat } = result[0];
-          res.render('edit-profile', { mobile_number, username, phone_number_id, pat }); // Make sure to pass username here
+          const { username, phone_number_id, pat, org_name } = result[0];
+          res.render('edit-profile', { mobile_number, username, phone_number_id, pat, org_name }); // Make sure to pass username here
         } else {
           res.render('error', { error: 'User not found.' });
         }
