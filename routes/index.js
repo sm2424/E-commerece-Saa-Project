@@ -1,12 +1,25 @@
 //routes/index.js
 var express = require('express');
 var router = express.Router();
+const bodyParser = require('body-parser');
 const axios = require('axios');
 const uuid = require('uuid');
+const db = require("../config/db");
+
+// Add body-parser middleware
+router.use(bodyParser.urlencoded({ extended: true }));
+
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('login');
+  // Check if the session is active
+  if (req.session.isAuthenticated) {
+    // If the session is active, redirect to dashboard
+    res.redirect('/dashboard');
+  } else {
+    // If the session is not active, render the login page
+    res.render('login', { mobile_number: req.session.mobile_number});
+  }
 });
 
 
@@ -22,24 +35,32 @@ router.post('/get-otp', (req, res) => {
       res.render('login', { error: 'An error occurred. Please try again.' });
     } else {
       if (result.length > 0) {
+        // Mobile number exists, initiate session and redirect to verify OTP
         const username = result[0].username;
         req.session.isAuthenticated = true;
         req.session.mobile_number = enteredmobile_number;
         req.session.username = username;
-        res.redirect('/dashboard');
+        res.redirect('/verify-otp');
       } else {
-         // Generate OTP if mobile number doesn't exist
-         const generatedOTP = '123456'; // For simplicity
+        // Mobile number doesn't exist, treat as new user
+        // Generate a new OTP and proceed with registration
+         
+        const generatedOTP = '123456'; // For simplicity
+        const sessionId = uuid.v4(); // Generate UUID for session ID
+        console.log("Session UUID:", sessionId); // Print session UUID to the terminal
 
-         // Store mobile number and OTP in the database
-         const sqlInsert = 'INSERT INTO users (mobile_number, otp) VALUES (?, ?)';
-         db.query(sqlInsert, [enteredmobile_number, generatedOTP], (err, result) => {
+         // Store mobile number, OTP, uuid in the database
+         const sqlInsert = 'INSERT INTO users (mobile_number, otp, uuid) VALUES (?, ?, ?)';
+         db.query(sqlInsert, [enteredmobile_number, generatedOTP, sessionId], (err, result) => {
            if (err) {
-             console.error('Error storing mobile number and OTP:', err);
-             res.render('login', { error: 'An error occurred. Please try again.' });
+              console.error('Error inserting new user:', err);
+              res.render('login', { error: 'An error occurred. Please try again.' });
            } else {
+            // Initiate session and redirect to verify OTP
+             req.session.isAuthenticated = true;
              req.session.mobile_number = enteredmobile_number;
-             res.render('otp');
+             res.redirect('/verify-otp');
+             
            }
          });
       }
@@ -47,34 +68,39 @@ router.post('/get-otp', (req, res) => {
   });
 });
 
-
-
-
-
-
-
-
+router.get('/verify-otp', (req, res) => {
+  // Render OTP verification page
+  res.render('otp');
+});
 
 router.post('/verify-otp', (req, res) => {
   const enteredOTP = req.body.otp;
+  const enteredmobile_number = req.session.mobile_number;
 
   // Check if the provided OTP is valid
-  if (enteredOTP === '123456') {
+  const sql = 'SELECT * FROM users WHERE mobile_number = ? AND otp = ?';
+  db.query(sql, [enteredmobile_number,enteredOTP], (err, result) => {
+    if (err) {
+      console.error('Error verifying OTP:', err);
+      res.render('otp', { error: 'An error occurred. Please try again.' });
+  } else if (result.length > 0 ) {
     // Valid OTP, user is authenticated
     req.session.isAuthenticated = true;
-    req.session.username = 'Admin'; // Set username to 'Admin'
+    //req.session.username = 'Name'; // Set username to 'Name'
     res.redirect('/dashboard');
   } else {
-    res.render('otp-page', { error: 'Invalid OTP. Please try again.' });
+    res.render('otp', { error: 'Invalid OTP. Please try again.' });
   }
+
+});
 });
 
 router.get('/dashboard', function (req, res, next) {
-  // Check if the user is authenticated before rendering the dashboard
+  // Check if the user is authenticated 
   if (req.session.isAuthenticated) {
     const mobile_number = req.session.mobile_number;
-
-    res.render('dashboard', { username: req.session.username, mobile_number: mobile_number });
+    const username = req.session.username; // Assuming username is stored in session
+    res.render('dashboard', { mobile_number, username });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -86,8 +112,8 @@ router.get('/list-products', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
     const mobile_number = req.session.mobile_number;
-
-    res.render('list-products', { username: req.session.username, mobile_number: mobile_number });
+    const username = req.session.username; // Assuming username is stored in session
+    res.render('list-products', { mobile_number, username });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -98,8 +124,8 @@ router.get('/order-history', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
     const mobile_number = req.session.mobile_number;
-
-    res.render('order-history', { username: req.session.username, mobile_number: mobile_number });
+    const username = req.session.username; // Assuming username is stored in session
+    res.render('order-history', { mobile_number, username });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -107,12 +133,11 @@ router.get('/order-history', function (req, res, next) {
 });
 
 router.get('/private-chat', function (req, res, next) {
-
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
     const mobile_number = req.session.mobile_number;
-
-    res.render('private-chat', { username: req.session.username, mobile_number: mobile_number });
+    const username = req.session.username; // Assuming username is stored in session
+    res.render('private-chat', { mobile_number, username });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
@@ -123,10 +148,37 @@ router.get('/contacts', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
     const mobile_number = req.session.mobile_number;
-
-    res.render('contacts', { username: req.session.username, mobile_number: mobile_number });
+    const username = req.session.username; // Assuming username is stored in session
+    res.render('contacts', { mobile_number, username });
   } else {
     // Redirect to login if not authenticated
+    res.redirect('/');
+  }
+});
+
+
+router.get('/view-profile', (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.isAuthenticated) {
+    const mobile_number = req.session.mobile_number;
+    const username = req.session.username; // Assuming username is stored in session
+
+    // Fetch user details from the database
+    const sql = 'SELECT * FROM users WHERE mobile_number = ?';
+    db.query(sql, [mobile_number], (err, result) => {
+      if (err) {
+        console.error('Error fetching user details:', err);
+        res.render('error', { error: 'An error occurred while fetching user details.' });
+      } else {
+        if (result.length > 0) {
+          const { username, phone_number_id, pat } = result[0];
+          res.render('view-profile', { mobile_number, username, phone_number_id, pat });
+        } else {
+          res.render('error', { error: 'User not found.' });
+        }
+      }
+    });
+  } else {
     res.redirect('/');
   }
 });
@@ -168,32 +220,6 @@ router.post('/save-profile', (req, res) => {
             }
           }
         });
-      }
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-router.get('/view-profile', (req, res) => {
-  // Check if the user is authenticated
-  if (req.session.isAuthenticated) {
-    const mobile_number = req.session.mobile_number;
-    const username = req.session.username; // Assuming username is stored in session
-
-    // Fetch user details from the database
-    const sql = 'SELECT * FROM users WHERE mobile_number = ?';
-    db.query(sql, [mobile_number], (err, result) => {
-      if (err) {
-        console.error('Error fetching user details:', err);
-        res.render('error', { error: 'An error occurred while fetching user details.' });
-      } else {
-        if (result.length > 0) {
-          const { username, phone_number_id, pat } = result[0];
-          res.render('view-profile', { mobile_number, username, phone_number_id, pat });
-        } else {
-          res.render('error', { error: 'User not found.' });
-        }
       }
     });
   } else {
