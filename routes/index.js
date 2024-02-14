@@ -9,8 +9,6 @@ const db = require("../config/db");
 // Add body-parser middleware
 router.use(bodyParser.urlencoded({ extended: true }));
 
-
-/* GET home page. */
 router.get('/', (req, res) => {
   // Check if the session is active
   if (req.session.isAuthenticated) {
@@ -21,8 +19,6 @@ router.get('/', (req, res) => {
     res.render('login', { mobile_number: req.session.mobile_number});
   }
 });
-
-
 
 router.post('/get-otp', (req, res) => {
   const enteredmobile_number = req.body.mobile_number;
@@ -107,7 +103,6 @@ router.get('/dashboard', function (req, res, next) {
   }
 });
 
-
 router.get('/list-products', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
@@ -155,7 +150,6 @@ router.get('/contacts', function (req, res, next) {
     res.redirect('/');
   }
 });
-
 
 router.get('/view-profile', (req, res) => {
   // Check if the user is authenticated
@@ -252,14 +246,6 @@ router.get('/edit-profile', (req, res) => {
     res.redirect('/');
   }
 });
-
-
-
-
-
-
-
-
 
 router.post('/sendmsg', function (req, res, next) {
 
