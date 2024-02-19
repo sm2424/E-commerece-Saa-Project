@@ -13,6 +13,8 @@
   <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
   <title>Cuba - Premium Admin Template</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
     rel="stylesheet">
@@ -42,7 +44,6 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
 </head>
 
-
 <body>
   <!-- loader starts-->
   <div class="loader-wrapper">
@@ -68,11 +69,8 @@
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <%- include('sidebarpannel'); -%>
-
           <!-- Page Sidebar Ends-->
           <div class="page-body">
-
-
             <div class="container-fluid">
               <div class="page-title">
                 <div class="row">
@@ -92,11 +90,6 @@
                 </div>
               </div>
             </div>
-
-            
-
-
-            
             <!-- Container-fluid starts -->
             <div class="container-fluid">
               <div>
@@ -116,57 +109,41 @@
                       <tbody>
                         <tr>
                           <td>Organization Name:</td>
-                          <td><%= org_name %></td>
+                          <td><span id="org_name"></span></td>
                         </tr>
                         <tr>
                           <td>Name:</td>
-                          <td>
-                            <%= username %>
-                          </td>
+                          <td><span id="name"></span></td>
                         </tr>
                         <tr>
                           <td>Mobile Number:</td>
-                          <td>
-                            <%= mobile_number %>
-                          </td>
+                          <td><%= mobile_number %></td>
                         </tr>
                         <tr>
                           <td>Phone Number ID:</td>
-                          <td>
-                            <%= phone_number_id %>
-                          </td>
+                          <td><span id="pni"></span></td>
                         </tr>
                         <tr>
-                          <td>Permeant Access Token:</td>
-                          <td>
-                            <%= pat %>
-                          </td>
+                          <td>Permanent Access Token:</td>
+                          <td><span id="pat"></span></td>
                         </tr>
                         <tr>
                           <td colspan="2">
                             <div class="card-footer text-center"> <!-- Changed to text-center for center alignment -->
-                              <form action="/edit-profile" method="GET">
-                                <button class="btn btn-primary" type="submit">Edit</button>
-                              </form>
-        
-        
+                              <button type="submit" class="btn btn-primary" id="editButton">Edit</button>
+                              <button type="submit" class="btn btn-primary" id="saveButton" style="display: none;">Save</button>
                             </div>
                           </td>
                         </tr>
-        
-                      </tbody>
-        
-                    </table>
+                       </tbody>
+                     </table>
                   </div>
+                  <div id="updateMessage" class="alert alert-success" style="display: none;"></div>
                 </div>
               </div>
             </div>
             <!-- Container-fluid Ends -->
-                      
-
-
-
-                </form>
+               </form>
               </div>
               </form>
             </div>
@@ -174,25 +151,10 @@
       </div>
   </div>
 
-
-
-
-
-
-
-
   <!-- Container-fluid Ends-->
   </div>
   <!-- footer start-->
   <%- include('footer'); -%>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12 footer-copyright text-center">
-          <p class="mb-0">Copyright 2023 © Cuba theme by pixelstrap </p>
-        </div>
-      </div>
-    </div>
-
     </div>
     </div>
     <!-- latest jquery-->
@@ -217,7 +179,91 @@
     <!-- Theme js-->
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/theme-customizer/customizer.js"></script>
+    <script>
+      $(document).ready(function(){
+         function load_data()
+          {
+              $.ajax({
+                  url:"/profile",
+                  method:"POST",
+                  data:{action:'fetch'},
+                  dataType : "JSON",
+                  success:function(response)
+                  {
+                      var data = response.data; // Accessing data from the response
+  
+                      if (data.length > 0) 
+                      {
+                          const { username, phone_number_id, fb_pat, org_name } = data[0]; // Accessing the first record
+                          $('#org_name').text(org_name); // Setting value for org_name input 
+                          $('#name').text(username); // Setting value for name input
+                          $('#pni').text(phone_number_id); // Setting value for phone number ID input
+                          $('#pat').text(fb_pat); // Setting value for permeant access token input
+                      }
+                  },
+                  error: function(xhr, status, error) {
+                      console.error(xhr.responseText); // Log any errors
+                  }
+              });
+          }
+          load_data(); // Load data when the page loads
 
+          // Edit button click event
+          $('#editButton').click(function () {
+              $('.table td span').each(function () {
+              var value = $(this).text();
+              var input = $('<input type="text" class="form-control">');
+              input.val(value);
+              $(this).html(input);
+              });
+              $('#editButton').hide();
+              $('#saveButton').show();
+          });
+
+
+
+          // Save button click event
+          $('#saveButton').click(function () {
+            var userData = {
+                org_name: $('#org_name input').val(),
+                username: $('#name input').val(), // Assuming the input field for name has an ID of "name"
+                phone_number_id: $('#pni input').val(), // Assuming the input field for phone number ID has an ID of "pni"
+                fb_pat: $('#pat input').val() // Assuming the input field for Facebook permanent access token has an ID of "pat"
+            };
+        
+            // Send updated user data to the server for editing
+            $.ajax({
+                url: "/profile",
+                method: "POST",
+                data: { action: 'edit', userData: userData },
+                dataType: "JSON",
+                success: function (response) {
+                    $('#updateMessage').html('Data updated successfully').removeClass('alert-danger').addClass('alert-success').show();
+                    setTimeout(function () {
+                        $('#updateMessage').hide();                                                           
+                    }, 3000); // Hide the message after 3 seconds (3000 milliseconds)
+                },
+                error: function (xhr, status, error) {
+                    $('#updateMessage').html('Error updating data').removeClass('alert-success').addClass('alert-danger').show();
+                    console.error(xhr.responseText); // Log any errors
+                }
+            });
+            // Reverting back to span elements after saving
+            $('.table td').each(function () {
+            var input = $(this).find('input');
+            if (input.length > 0) {
+                var value = input.val();
+                $(this).find('span').text(value);
+            }
+          });
+
+            $('#editButton').show();
+            $('#saveButton').hide();
+
+        });
+});
+
+</script>
 </body>
 
 </html>

@@ -32,10 +32,12 @@ router.post('/get-otp', (req, res) => {
     } else {
       if (result.length > 0) {
         // Mobile number exists, initiate session and redirect to verify OTP
+        const user_id = result[0].id; // Assuming the primary key is named 'id'
         const username = result[0].username;
         req.session.isAuthenticated = true;
         req.session.mobile_number = enteredmobile_number;
         req.session.username = username;
+        req.session.user_id = user_id; // Store user_id in the session
         res.redirect('/verify-otp');
       } else {
         // Mobile number doesn't exist, treat as new user
@@ -55,6 +57,7 @@ router.post('/get-otp', (req, res) => {
             // Initiate session and redirect to verify OTP
              req.session.isAuthenticated = true;
              req.session.mobile_number = enteredmobile_number;
+             req.session.user_id = result.insertId; // Store the newly inserted user_id in the session
              res.redirect('/verify-otp');
              
            }
@@ -139,6 +142,60 @@ router.get('/private-chat', function (req, res, next) {
   }
 });
 
+router.get('/profile', (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.isAuthenticated) {
+    const mobile_number = req.session.mobile_number;
+    const username = req.session.username; // Assuming username is stored in session
+    const phone_number_id = req.session.phone_number_id; // Assuming phone_number_id is stored in session
+    const fb_pat = req.session.fb_pat; // Assuming fb_pat is stored in session
+    const org_name = req.session.org_name;
+    res.render('profile', { pageTitle: 'User Profile', isLoggedIn: true, mobile_number, username, phone_number_id, fb_pat, org_name });
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.post("/profile", (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.isAuthenticated) {
+    const action = req.body.action;
+    if (action === 'fetch') {
+      const mobile_number = req.session.mobile_number; 
+      const sql = 'SELECT * FROM users WHERE mobile_number = ?';
+      db.query(sql, [mobile_number], (err, data) => {
+        if (err) {
+          console.error('Error fetching user data:', err);
+          res.status(500).json({ error: 'An error occurred while fetching user data.' });
+        } else {
+          res.json({ data });
+        }
+      });
+    } else if (action === 'edit') {
+      const { username, phone_number_id, fb_pat, org_name } = req.body.userData;
+     
+      const mobile_number = req.session.mobile_number;
+      
+      // Update user data in the database
+      const sql = 'UPDATE users SET username = ?, phone_number_id = ?, fb_pat = ?, org_name = ? WHERE mobile_number = ?';
+      db.query(sql, [username, phone_number_id, fb_pat, org_name, mobile_number ], (err, data) => {
+        if (err) {
+          console.error('Error updating user data:', err);
+          res.status(500).json({ error: 'An error occurred while updating user data.' });
+        } else {
+          res.json({ message: 'Data Edited' });
+        }
+      });
+    } else {
+      res.status(400).json({ error: 'Invalid action' });
+    }
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+});
+
+
+
 router.get('/contacts', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
@@ -151,24 +208,46 @@ router.get('/contacts', function (req, res, next) {
   }
 });
 
-router.get('/view-profile', (req, res) => {
+router.post('/save-contact', (req, res) => {
   // Check if the user is authenticated
   if (req.session.isAuthenticated) {
-    const mobile_number = req.session.mobile_number;
-    const username = req.session.username; // Assuming username is stored in session
+    const { full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode } = req.body;
+    const admin_id = req.session.user_id; // Assuming user_id is stored in session
 
-    // Fetch user details from the database
-    const sql = 'SELECT * FROM users WHERE mobile_number = ?';
-    db.query(sql, [mobile_number], (err, result) => {
+    // Insert contact details into the database
+    const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    db.query(sql, [admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode], (err, result) => {
       if (err) {
-        console.error('Error fetching user details:', err);
-        res.render('error', { error: 'An error occurred while fetching user details.' });
+        console.error('Error saving contact:', err);
+        res.render('error', { error: 'An error occurred while saving contact.' });
+      } else {
+        console.log('Contact saved successfully');
+        
+        //res.redirect('/contacts'); // Redirect to contacts page after saving
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.get('/fetch-contact-details', (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.isAuthenticated) {
+    const adminId = req.params.adminId;
+
+    // Fetch contact details from the database using the adminId
+    const sql = 'SELECT full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode FROM contacts WHERE admin_id = ?';
+    db.query(sql, [adminId], (err, result) => {
+      if (err) {
+        console.error('Error fetching contact details:', err);
+        res.render('error', { error: 'An error occurred while fetching contact details.' });
       } else {
         if (result.length > 0) {
-          const { username, phone_number_id, pat, org_name } = result[0];
-          res.render('view-profile', { mobile_number, username, phone_number_id, pat, org_name });
+          const contactDetails = result[0];
+          res.render('view-contact', { contactDetails });
         } else {
-          res.render('error', { error: 'User not found.' });
+          res.render('error', { error: 'Contact not found.' });
         }
       }
     });
@@ -177,75 +256,10 @@ router.get('/view-profile', (req, res) => {
   }
 });
 
-router.post('/save-profile', (req, res) => {
-  // Check if the user is authenticated
-  if (req.session.isAuthenticated) {
-    const { name, phone_number_id, pat, org_name } = req.body;
-    const mobile_number = req.session.mobile_number;
-    const username = req.session.username; // Assuming username is stored in session
-
-    // Update profile details in the database
-    const sql = 'UPDATE users SET username = ?, phone_number_id = ?, pat = ?, org_name = ? WHERE mobile_number = ?';
-    db.query(sql, [name, phone_number_id, pat, org_name, mobile_number], (err, result) => {
-      if (err) {
-        console.error('Error updating profile:', err);
-        res.render('error', { error: 'An error occurred while updating profile.' });
-      } else {
-        console.log('Profile updated successfully');
 
 
-        // Fetch the updated username from the database
-        const sqlFetchUsername = 'SELECT username FROM users WHERE mobile_number = ?';
-        db.query(sqlFetchUsername, [mobile_number], (err, result) => {
-          if (err) {
-            console.error('Error fetching user details:', err);
-            res.render('error', { error: 'An error occurred while fetching user details.' });
-          } else {
-            if (result.length > 0) {
-              const newUsername = result[0].username;
-              // Update session with the new username
-              req.session.username = newUsername;
-              // Redirect to profile page or any other appropriate page
-              console.log('Profile updated successfully');
-              res.redirect('/view-profile');
 
-            } else {
-              res.render('error', { error: 'User not found.' });
-            }
-          }
-        });
-      }
-    });
-  } else {
-    res.redirect('/');
-  }
-});
 
-router.get('/edit-profile', (req, res) => {
-  // Check if the user is authenticated
-  if (req.session.isAuthenticated) {
-    const mobile_number = req.session.mobile_number;
-    const username = req.session.username; // Assuming username is stored in session
-
-    // Fetch user details from the database
-    const sql = 'SELECT * FROM users WHERE mobile_number = ?';
-    db.query(sql, [mobile_number], (err, result) => {
-      if (err) {
-        console.error('Error fetching user details:', err);
-        res.render('error', { error: 'An error occurred while fetching user details.' });
-      } else {
-        if (result.length > 0) {
-          const { username, phone_number_id, pat, org_name } = result[0];
-          res.render('edit-profile', { mobile_number, username, phone_number_id, pat, org_name }); // Make sure to pass username here
-        } else {
-          res.render('error', { error: 'User not found.' });
-        }
-      }
-    });
-  } else {
-    res.redirect('/');
-  }
-});
 
 router.post('/sendmsg', function (req, res, next) {
 
