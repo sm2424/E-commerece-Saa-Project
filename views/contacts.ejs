@@ -1,447 +1,684 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="pixelstrap">
-    <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
-    <title>Cuba - Premium Admin Template</title>
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.css">
-    <!-- ico-font-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/icofont.css">
-    <!-- Themify icon-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/themify.css">
-    <!-- Flag icon-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/flag-icon.css">
-    <!-- Feather icon-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/feather-icon.css">
-    <!-- Plugins css start-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/slick.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/slick-theme.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/animate.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/select2.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/sweetalert2.css">
-    <!-- Plugins css Ends-->
-    <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
-    <!-- App css-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-    <link id="color" rel="stylesheet" href="../assets/css/color-1.css" media="screen">
-    <!-- Responsive css-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
-  </head>
-  <body> 
-    <!-- loader starts-->
-    <div class="loader-wrapper">
-      <div class="loader-index"> <span></span></div>
-      <svg>
-        <defs></defs>
-        <filter id="goo">
-          <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
-          <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
-        </filter>
-      </svg>
-    </div>
-    <!-- loader ends-->
-    <!-- tap on top starts-->
-    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
-    <!-- tap on tap ends-->
-    <!-- page-wrapper Start-->
-    <div class="page-wrapper compact-wrapper" id="pageWrapper">
-      <!-- Page Header Start-->
-      <%- include('header', { mobile_number: mobile_number }) -%>
-      
-      <!-- Page Header Ends-->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+  <meta name="keywords"
+    content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+  <meta name="author" content="pixelstrap">
+  <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
+  <title>Cuba - Premium Admin Template</title>
+  <!-- Google font-->
+  <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.css">
+  <!-- ico-font-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/icofont.css">
+  <!-- Themify icon-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/themify.css">
+  <!-- Flag icon-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/flag-icon.css">
+  <!-- Feather icon-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/feather-icon.css">
+  <!-- Plugins css start-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/slick.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/slick-theme.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/scrollbar.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/animate.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/select2.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/sweetalert2.css">
+  <!-- Plugins css Ends-->
+  <!-- Bootstrap css-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
+  <!-- App css-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link id="color" rel="stylesheet" href="../assets/css/color-1.css" media="screen">
+  <!-- Responsive css-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <!-- loader starts-->
+  <div class="loader-wrapper">
+    <div class="loader-index"> <span></span></div>
+    <svg>
+      <defs></defs>
+      <filter id="goo">
+        <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+        <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+      </filter>
+    </svg>
+  </div>
+  <!-- loader ends-->
+  <!-- tap on top starts-->
+  <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+  <!-- tap on tap ends-->
+  <!-- page-wrapper Start-->
+  <div class="page-wrapper compact-wrapper" id="pageWrapper">
+    <!-- Page Header Start-->
+    <%- include('header', { mobile_number: mobile_number }) -%>
+    <!-- Page Header Ends-->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
         <%- include('sidebarpannel'); -%>
-        <!-- Page Sidebar Ends-->
-        <div class="page-body">
-          <div class="container-fluid">
-            <div class="page-title">
-              <div class="row">
-                <div class="col-6">
-                  <h3>Contacts</h3>
+          <!-- Page Sidebar Ends-->
+          <div class="page-body">
+            <div class="container-fluid">
+              <div class="page-title">
+                <div class="row">
+                  <div class="col-6">
+                    <h3>Contacts</h3>
+                  </div>
+                  <div class="col-6">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="index.html">                                       
+                          <svg class="stroke-icon">
+                            <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+                          </svg></a></li>
+                      <li class="breadcrumb-item">Apps</li>
+                      <li class="breadcrumb-item active">Contacts</li>
+                    </ol>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
-          </div>
-          <!-- Container-fluid starts-->
-          <div class="container-fluid">
-            <div class="email-wrap bookmark-wrap">
-              <div class="row">
-                
-                <div class="col-xl-9 col-md-12 box-col-12">
-                  <div class="email-right-aside bookmark-tabcontent contacts-tabs">
-                    <div class="card email-body radius-left dark-contact">
-                      <div class="ps-0">
-                        <div class="tab-content">
-                          <div class="tab-pane fade active show" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
-                            <div class="card mb-0">
-                              <div class="card-header d-flex">
-                                <h5>Personal</h5><span class="f-14 pull-right mt-0">5 Contacts</span>
-                              </div>
-                              <div class="card-body p-0">
-                                <div class="row list-persons" id="addcon">
-                                  <div class="col-xl-4 xl-50 col-md-5">
-                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                      <a class="contact-tab-0 nav-link active" id="v-pills-user-tab" data-bs-toggle="pill" onclick="activeDiv(0)" href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="true">
-                                        <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle update_img_0" src="../assets/images/user/2.png" alt="">
-                                          <div class="media-body">
-                                            <h6> <span class="first_name_0">Full name </span></h6>
-                                            <p class="email_add_0">whatsup number</p>
-                                          </div>
-                                        </div></a>
-                                        
-                                        <a class="contact-tab-1 nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" onclick="activeDiv(1)" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"> 
-                                        <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle update_img_1" src="../assets/images/user/8.jpg" alt="">
-                                          <div class="media-body">
-                                            <h6> <span class="first_name_1">Comeren </span><span class="last_name_1">Diaz</span></h6>
-                                            <p class="email_add_1">comeren@gmail.com</p>
-                                          </div>
-                                        </div>
-                                        </a>
-                                        </div>
-                                  </div>
-                                  <div class="col-xl-8 xl-50 col-md-7">
-                                    <div class="tab-content" id="v-pills-tabContent">
-                                      <div class="tab-pane contact-tab-0 tab-content-child fade show active" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
-                                        <div class="profile-mail">
-                                          <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_0" src="../assets/images/user/2.png" alt="">
-                                            <input class="updateimg" type="file" name="img" onchange="readURL(this,0)">
-                                            <div class="media-body mt-0">
-                                              <h5><span class="first_name_0">Bucky </span><span class="last_name_0">Barnes</span></h5>
-                                              <p class="email_add_0">barnes@gmail.com</p>
-                                              <ul>
-                                                <li><a href="#" onclick="editContact(0)">Edit</a></li>
-                                                <li><a href="#" onclick="deleteContact(0)">Delete</a></li>
-                                                <li><a href="#" onclick="history(0)">History</a></li>
-                                                <li><a href="#" onclick="printContact(0)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
-                                              </ul>
-                                            </div>
-                                          </div>
-                                          
-                                          <div class="email-general">
-                                            <h6 class="mb-3">General</h6>
-                                            <ul>
-                                              <li>Full Name <span class="font-primary" id="fullNameSpan"></span></li>
-                                              <li>Whatsapp Number <span class="font-primary" id="whatsappNumberSpan"></span></li>
-                                              <li>Gender <span class="font-primary" id="genderSpan"></span></li>
-                                              <li>Birthday <span class="font-primary" id="birthdaySpan"></span></li>
-                                              <li>City <span class="font-primary" id="citySpan"></span></li>                                             
-                                            </ul>
-                                          </div>
-                                        </div>
+            <!-- Container-fluid starts-->
+            <div class="container-fluid">
+              <div class="email-wrap bookmark-wrap">
+                <div class="row">
+                  <div class="col-xl-18 col-md-12 box-col-18">
+                    <div class="email-right-aside bookmark-tabcontent contacts-tabs">
+                      <div class="card email-body radius-left dark-contact">
+                        <div class="ps-0">
+                          <div class="tab-content">
+                            <div class="tab-pane fade active show" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
+                              <div class="card mb-0">
+                                
+                                <div class="card-header d-flex">
+                                  <!-- Placeholder for "Shiv" -->
+                                  <div class="flex-start"><h5>Contacts [ 
+                                    <span>
+                                      <%= rows.length %>
+                                    </span> ] 
+                                  </h5></div>
+                                  
+                                  <!-- Success message -->
+                                  <div id="successMessage" style="display: none; background-color: rgb(28, 199, 28); color: white; border-radius: 10px; padding: 5px;">
+                                    Contact added successfully!
+                                  </div>                                         
+                                  
+                                  <!-- Add button -->
+                                  <button type="button" id="add_data" class="btn btn-success btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+                                </div>  
+
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
-                                      <div class="tab-pane contact-tab-1 tab-content-child fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                        <div class="profile-mail">
-                                          <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_1" src="../assets/images/user/8.jpg" alt="">
-                                            <input class="updateimg" type="file" name="img" onchange="readURL(this,1)">
-                                            <div class="media-body mt-0">
-                                              <h5><span class="first_name_1">Comeren </span><span class="last_name_1">Diaz</span></h5>
-                                              <p class="email_add_1">comeren@gmail.com</p>
-                                              <ul>
-                                                <li><a href="#" onclick="editContact(1)">Edit</a></li>
-                                                <li><a href="#" onclick="deleteContact(1)">Delete</a></li>
-                                                <li><a href="#" onclick="history(1)">History</a></li>
-                                                <li><a href="#" onclick="printContact(1)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
-                                              </ul>
-                                            </div>
+                                
+                                      <div class="modal-body">
+                                        <form id="addContactForm">
+                                          <div class="mb-3">
+                                            <label for="fullName" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="fullName" required>
                                           </div>
-                                          <div class="email-general">
-                                            <h6 class="mb-3">General</h6>
-                                            <ul>
-                                              <li>Name <span class="font-primary first_name_1">Comeren</span></li>
-                                              <li>Gender <span class="font-primary">Female</span></li>
-                                              <li>Birthday<span class="font-primary"> <span class="birth_day_1">7</span><span class="birth_month_1 ms-1">Feb</span><span class="birth_year_1 ms-1">1995</span></span></li>
-                                              <li>Personality<span class="font-primary personality_1">Cool</span></li>
-                                              <li>City<span class="font-primary city_1">Delhi</span></li>
-                                              <li>Mobile No<span class="font-primary mobile_num_1">+0 1800 55812</span></li>
-                                              <li>Email Address <span class="font-primary email_add_1">comeren@gmail.com</span></li>
-                                              <li>Website<span class="font-primary url_add_1">www.cometest@.com</span></li>
-                                              <li>Interest<span class="font-primary interest_1">sports</span></li>
-                                            </ul>
+                                          <div class="mb-3">
+                                            <label for="whatsappNumber" class="form-label">WhatsApp Number</label>
+                                            <input type="text" class="form-control" id="whatsappNumber" required>
                                           </div>
-                                        </div>
+                                        </form>
                                       </div>
                                       
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="addContactBtn">Add</button>
+                                      </div>
                                     </div>
-                                   => <div class="contact-editform ps-0">
-                                      <form action="/save-contact" method="post">
-                                        <div class="row g-2">
-                                          <div class="mt-0 mb-3 col-md-12">
-                                            <label for = "full_name">Full Name</label>
-                                            <div class="row">
-                                              <div class="col-sm-6">
-                                                
-                                                <input class="form-control" id="full_name" name="full_name" type="text" required="" placeholder="Full Name">
-                                              </div>
-                                              </div>
-                                          </div>
+                                  </div>
+                                </div>
                                           
-                                          <div class="mt-0 mb-3 col-md-12">
-                                            <label for="whatsapp_number">Whatsapp Number </label>
-                                            <div class="row">
-                                              <div class="col-sm-6">
-                                                 <input class="form-control" id="whatsapp_number" name="whatsapp_number" type="text" required="" autocomplete="off">
-                                              </div>                                              
+                                <div class="card-body p-0">
+                                  <div class="row list-persons" id="addcon">
+                                    <div class="col-xl-4 xl-50 col-md-5">
+                                      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <% rows.forEach(function(eachData, index) { %>
+                                          <a class="contact-tab-<%= index %> nav-link <%= index === 0 ? 'active' : '' %>"
+                                            id="v-pills-user-tab-<%= index %>" 
+                                            data-bs-toggle="pill"
+                                            onclick="activeDiv(<%= index %>)" 
+                                            href="#v-pills-user-<%= index %>"
+                                            role="tab" aria-controls="v-pills-user"
+                                            aria-selected="<%= index === 0 ? 'true' : 'false' %>">
+                                            <div class="media">
+                                              <div
+                                                class="img-circle img-50 img-fluid m-r-20 rounded-circle update_img_<%= index %>"
+                                                style="background-color: #007bff; color: #fff; text-align: center; line-height: 50px; font-size: 20px;">
+                                                <% const
+                                                nameParts=eachData.full_name.split(' ');
+                                                const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
+                                                %>
+                                                <%= initials %>
+                                              </div>
+                                                <div class="media-body">
+                                                  <h6>
+                                                    <span class="full_name<%= index %>"> <%= eachData.full_name %> </span>
+                                                  </h6>
+                                                  <p class="whatsapp_number<%= index %>"><%= eachData.whatsapp_number %></p>
+                                                </div>
+                                            </div>
+                                          </a>
+                                        <% }); %>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-8 xl-50 col-md-7">
+                                      <div class="tab-content">
+                                        <% rows.forEach(function(eachData, index) { %>
+                                          <div class="tab-pane contact-tab-<%= index %> fade <%= index === 0 ? ' show active' : '' %>" id="v-pills-user-<%=index %>" role="tabpanel" aria-labelledby="v-pills-user-tab-<%=index %>">
+                                            <div class="profile-mail">
+                                              <div class="media">
+                                                <div class="img-circle img-50 img-fluid m-r-20 rounded-circle update_img_<%= index %>" style="background-color: #007bff; color: #fff; text-align: center; line-height: 50px; font-size: 20px;">
+                                                  <% const nameParts = eachData.full_name.split(' ');
+                                                  const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
+                                                  %>
+                                                  <%= initials %>
+                                                </div>
+                                                <div class="media-body mt-0">
+                                                  <h5>
+                                                    <span class="full_name<%= index %>"> <%= eachData.full_name %> </span>
+                                                  </h5>
+                                                  <p class="whatsapp_number<%= index %>"> <%= eachData.whatsapp_number %> </p>
+                                                  <ul>
+                                                    <li>
+                                                      <a href="#" onclick="showEditForm(<%= index %>)">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                      <a href="#" onclick="deleteContact(<%= index %>)">Delete</a>
+                                                    </li>
+                                                    <li>
+                                                      <a href="#" onclick="history(<%= index %>)">History</a>
+                                                    </li>
+                                                    <li>
+                                                      <a href="#" onclick="printContact(<%= index %>)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                              <div class="email-general">
+                                                <h6 class="mb-3">General</h6>
+                                                <ul>
+                                                                                    <li>Full Name <span class="font-primary"> <%= eachData.full_name %> </span></li>
+                                                                                    <li>Whatsapp number <span class="font-primary"> <%= eachData.whatsapp_number %> </span></li>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        <% }); %>
+                                      </div>
+
+
+
+
+
+
+                                      <div class="contact-editform ps-0">
+                                        <form>
+                                          <div class="row g-2">
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <label>Name</label>
+                                              <div class="row">
+                                                <div class="col-sm-6">
+                                                  <input class="form-control" id="first_name" type="text" required="" placeholder="First Name" value="first_name">
+                                                </div>
+                                                <div class="col-sm-6">   
+                                                  <input class="form-control" id="last_name" type="text" required="" placeholder="Last Name" value="last_name">
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <label>Email Address</label>
+                                              <input class="form-control" id="email_add" type="text" required="" autocomplete="off">
+                                            </div>
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <label>Phone</label>
+                                              <div class="row">
+                                                <div class="col-sm-6">
+                                                  <input class="form-control" id="mobile_num" type="text" required="" autocomplete="off">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <select class="form-control">
+                                                    <option>Mobile</option>
+                                                    <option>Work</option>
+                                                    <option>Others</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="row g-2 more-data">
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <label>URLS</label>
+                                              <div class="row">
+                                                <div class="col-lg-6 col-sm-6">
+                                                  <input class="form-control" id="url_add" type="text" required="">
+                                                </div>
+                                                <div class="col-lg-4 col-sm-6">   
+                                                  <select class="js-example-basic-single">
+                                                    <option value="pw">Personal web address</option>
+                                                    <option value="cw">Company web address</option>
+                                                    <option value="fb">Fabebook URL</option>
+                                                    <option value="tw">Twitter URL</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <label>Personal</label>
+                                              <div class="d-block">
+                                                <label class="me-3" for="edo-ani">
+                                                  <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani" checked=""><span>Male</span>
+                                                </label>
+                                                <label for="edo-ani1">
+                                                  <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani"><span>Female</span>
+                                                </label>
+                                              </div>
+                                            </div>
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <div class="row">
+                                                <div class="col-lg-2 col-sm-4">
+                                                  <select class="form-control" id="birth_day">
+                                                    <option class="f-w-600">Day</option>
+                                                    <option>01</option>
+                                                    <option>02</option>
+                                                    <option>03</option>
+                                                    <option>04</option>
+                                                    <option>05</option>
+                                                    <option>06</option>
+                                                    <option>07</option>
+                                                    <option>08</option>
+                                                    <option>09</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                    <option>13</option>
+                                                    <option>14</option>
+                                                    <option>15</option>
+                                                    <option>16</option>
+                                                    <option>17</option>
+                                                    <option>18</option>
+                                                    <option>19</option>
+                                                    <option>20</option>
+                                                    <option>21</option>
+                                                    <option>22</option>
+                                                    <option>23</option>
+                                                    <option>24</option>
+                                                    <option>25</option>
+                                                    <option>26</option>
+                                                    <option>27</option>
+                                                    <option>28</option>
+                                                    <option>29</option>
+                                                    <option>30</option>
+                                                    <option>31</option>
+                                                  </select>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-4">
+                                                  <select class="form-control" id="birth_month">
+                                                    <option class="f-w-600">Month</option>
+                                                    <option>January</option>
+                                                    <option>February</option>
+                                                    <option>March</option>
+                                                    <option>April</option>
+                                                    <option>May</option>
+                                                    <option>June</option>
+                                                    <option>July</option>
+                                                    <option>August</option>
+                                                    <option>September</option>
+                                                    <option>October</option>
+                                                    <option>November</option>
+                                                    <option>December</option>
+                                                  </select>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-4">
+                                                  <input class="form-control" id="birth_year" type="text">
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mt-0 mb-3 col-md-12">
+                                              <div class="row">
+                                                <div class="col-sm-6">
+                                                  <label>Personality</label>
+                                                  <input class="form-control" id="personality" type="text" required="" autocomplete="off">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <label>Interest</label>
+                                                  <input class="form-control" id="interest" type="text" required="" autocomplete="off">
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 col-md-12">
+                                              <label>Home Address</label>
+                                              <div class="row">
+                                                <div class="col-12">
+                                                  <div class="mb-2">
+                                                    <input class="form-control" type="text" placeholder="Address">
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <div class="mb-2">
+                                                    <input class="form-control" id="city" type="text" placeholder="City">
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <div class="mb-2">
+                                                    <input class="form-control" type="text" placeholder="State">
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <div>
+                                                    <input class="form-control" type="text" placeholder="Country">
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                  <div>
+                                                    <input class="form-control" type="text" placeholder="Pin Code">
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div><a class="ps-0 edit-information" href="#">Edit more information</a>
+                                          <button class="btn btn-secondary update-contact" type="button">Save</button>
+                                          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="fade tab-pane" id="pills-organization" role="tabpanel" aria-labelledby="pills-organization">
+                              <div class="card mb-0">
+                                <div class="card-header d-flex">
+                                  <h5>Organization</h5><span class="f-14 pull-right mt-0">10 Contacts</span>
+                                </div>
+                                <div class="card-body p-0">
+                                  <div class="row list-persons">
+                                    <div class="col-xl-4 xl-50 col-md-5">
+                                      <div class="nav flex-column nav-pills" id="v-pills-tab1" role="tablist" aria-orientation="vertical"><a class="nav-link active" id="v-pills-iduser-tab" data-bs-toggle="pill" href="#v-pills-iduser" role="tab" aria-controls="v-pills-iduser" aria-selected="true">
+                                          <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" src="../assets/images/user/user.png" alt="">
+                                            <div class="media-body">
+                                              <h6>Mark jecno</h6>
+                                              <p>markjecno@gmail.com</p>
+                                            </div>
+                                          </div></a><a class="nav-link" id="v-pills-iduser1-tab" data-bs-toggle="pill" href="#v-pills-iduser1" role="tab" aria-controls="v-pills-iduser1" aria-selected="false"> 
+                                          <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" src="../assets/images/user/3.jpg" alt="">
+                                            <div class="media-body">
+                                              <h6>Jason Borne</h6>
+                                              <p>jasonb@gmail.com</p>
+                                            </div>
+                                          </div></a><a class="nav-link" id="v-pills-iduser2-tab" data-bs-toggle="pill" href="#v-pills-iduser2" role="tab" aria-controls="v-pills-iduser2" aria-selected="false">
+                                          <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" src="../assets/images/user/4.jpg" alt="">
+                                            <div class="media-body">
+                                              <h6>Sarah Loren</h6>
+                                              <p>barnes@gmail.com</p>
+                                            </div>
+                                          </div></a><a class="nav-link" id="v-pills-iduser3-tab" data-bs-toggle="pill" href="#v-pills-iduser3" role="tab" aria-controls="v-pills-iduser3" aria-selected="false">
+                                          <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" src="../assets/images/user/10.jpg" alt="">
+                                            <div class="media-body">
+                                              <h6>Andew Jon</h6>
+                                              <p>andrewj@gmail.com</p>
+                                            </div>
+                                          </div></a></div>
+                                    </div>
+                                    <div class="col-xl-8 xl-50 col-md-7">
+                                      <div class="tab-content" id="v-pills-tabContent1">
+                                        <div class="tab-pane fade show active" id="v-pills-iduser" role="tabpanel" aria-labelledby="v-pills-iduser-tab">
+                                          <div class="profile-mail">
+                                            <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_5" src="../assets/images/user/user.png" alt="">
+                                              <div class="media-body mt-0">
+                                                <h5><span class="first_name_5">Mark </span><span class="last_name_5">jecno</span></h5>
+                                                <p class="email_add_5">markjecno@gmail.com</p>
+                                                <ul>
+                                                  <li><a href="#" onclick="printContact(5)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                            <div class="email-general">
+                                              <h6>General</h6>
+                                              <p>Email Address: <span class="font-primary email_add_5">markjecno@gmail.com</span></p>
+                                              <div class="gender">
+                                                <h6>Personal</h6>
+                                                <p>Gender: <span>Male</span></p>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="row g-2 more-data">
-                                          
-                                          <div class="mt-0 mb-3 col-md-12">
-                                            
-                                            <div class="d-block">
-                                              <label class="me-3" for="edo-ani">
-                                                <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani" checked=""><span>Male</span>
-                                              </label>
-                                              <label for="edo-ani1">
-                                                <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani"><span>Female</span>
-                                              </label>
-                                              
+                                        <div class="tab-pane fade" id="v-pills-iduser1" role="tabpanel" aria-labelledby="v-pills-iduser1-tab">
+                                          <div class="profile-mail">
+                                            <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_6" src="../assets/images/user/3.jpg" alt="">
+                                              <div class="media-body mt-0">
+                                                <h5><span class="first_name_6">Jason </span><span class="last_name_6">Borne</span></h5>
+                                                <p class="email_add_6">jasonb@gmail.com</p>
+                                                <ul>
+                                                  <li><a href="#" onclick="printContact(6)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
+                                                </ul>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="mt-0 mb-3 col-md-12">
-                                            <div class="row">
-                                              <div class="col-lg-2 col-sm-4">
-                                                <select class="form-control" id="birth_day">
-                                                  <option class="f-w-600">Day</option>
-                                                  <option>01</option>
-                                                  <option>02</option>
-                                                  <option>03</option>
-                                                  <option>04</option>
-                                                  <option>05</option>
-                                                  <option>06</option>
-                                                  <option>07</option>
-                                                  <option>08</option>
-                                                  <option>09</option>
-                                                  <option>10</option>
-                                                  <option>11</option>
-                                                  <option>12</option>
-                                                  <option>13</option>
-                                                  <option>14</option>
-                                                  <option>15</option>
-                                                  <option>16</option>
-                                                  <option>17</option>
-                                                  <option>18</option>
-                                                  <option>19</option>
-                                                  <option>20</option>
-                                                  <option>21</option>
-                                                  <option>22</option>
-                                                  <option>23</option>
-                                                  <option>24</option>
-                                                  <option>25</option>
-                                                  <option>26</option>
-                                                  <option>27</option>
-                                                  <option>28</option>
-                                                  <option>29</option>
-                                                  <option>30</option>
-                                                  <option>31</option>
-                                                </select>
-                                              </div>
-                                              <div class="col-lg-3 col-sm-4">
-                                                <select class="form-control" id="birth_month">
-                                                  <option class="f-w-600">Month</option>
-                                                  <option>January</option>
-                                                  <option>February</option>
-                                                  <option>March</option>
-                                                  <option>April</option>
-                                                  <option>May</option>
-                                                  <option>June</option>
-                                                  <option>July</option>
-                                                  <option>August</option>
-                                                  <option>September</option>
-                                                  <option>October</option>
-                                                  <option>November</option>
-                                                  <option>December</option>
-                                                </select>
-                                              </div>
-                                              <div class="col-lg-3 col-sm-4">
-                                                <input class="form-control" id="birth_year" type="text">
+                                            <div class="email-general">
+                                              <h6>General</h6>
+                                              <p>Email Address: <span class="font-primary email_add_6">jasonb@gmail.com</span></p>
+                                              <div class="gender">
+                                                <h6>Personal</h6>
+                                                <p>Gender: <span>Male</span></p>
                                               </div>
                                             </div>
                                           </div>
-                                          <div class="mt-0 mb-3 col-md-12">
-                                            
-                                          </div>
-                                          <div class="mb-3 col-md-12">
-                                            <label>Home Address</label>
-                                            <div class="row">
-                                              <div class="col-12">
-                                                <div class="mb-2">
-                                                  <input class="form-control" type="text" placeholder="Address">
-                                                </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-iduser2" role="tabpanel" aria-labelledby="v-pills-iduser2-tab">
+                                          <div class="profile-mail">
+                                            <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_7" src="../assets/images/user/4.jpg" alt="">
+                                              <div class="media-body mt-0">
+                                                <h5> <span class="first_name_7">Sarah </span><span class="last_name_7">Loren</span></h5>
+                                                <p class="email_add_7">barnes@gmail.com</p>
+                                                <ul>
+                                                  <li><a href="#" onclick="printContact(7)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
+                                                </ul>
                                               </div>
-                                              <div class="col-sm-6">
-                                                <div class="mb-2">
-                                                  <input class="form-control" id="city" type="text" placeholder="City">
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div class="mb-2">
-                                                  <input class="form-control" type="text" placeholder="State">
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div>
-                                                  <input class="form-control" type="text" placeholder="Country">
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div>
-                                                  <input class="form-control" type="text" placeholder="Pin Code">
-                                                </div>
+                                            </div>
+                                            <div class="email-general">
+                                              <h6>General</h6>
+                                              <p>Email Address: <span class="font-primary email_add_7">barnes@gmail.com</span></p>
+                                              <div class="gender">
+                                                <h6>Personal</h6>
+                                                <p>Gender: <span>Female</span></p>
                                               </div>
                                             </div>
                                           </div>
-                                        </div><a class="ps-0 edit-information" href="#">Edit more information</a>
-                                        <button class="btn btn-secondary update-contact" type="submit">Save</button> 
-                                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                      </form>
-                                    </div>
-                                  =>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="fade tab-pane" id="pills-organization" role="tabpanel" aria-labelledby="pills-organization">
-                            <div class="card mb-0">
-                              <div class="card-header d-flex">
-                                <h5>Organization</h5><span class="f-14 pull-right mt-0">10 Contacts</span>
-                              </div>
-                              
-                            </div>
-                          </div>
-                          <div id="right-history">
-                            <div class="modal-header p-l-20 p-r-20">
-                              <h6 class="modal-title w-100">Contact History<span class="pull-right"><a class="closehistory" href="#"><i class="icofont icofont-close"></i></a></span></h6>
-                            </div>
-                            <div class="history-details">
-                              <div class="text-center"><i class="icofont icofont-ui-edit"></i>
-                                <p>Contact has not been modified yet.</p>
-                              </div>
-                              <div class="media"><i class="icofont icofont-star me-3"></i>
-                                <div class="media-body mt-0">
-                                  <h6 class="mt-0">Contact Created</h6>
-                                  <p class="mb-0">Contact is created via mail</p><span class="f-12">Sep 10, 2019 4:00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="modal fade modal-bookmark" id="printModal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">Print preview</h5>
-                                  <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body list-persons">
-                                  <div class="profile-mail pt-0" id="DivIdToPrint">
-                                    <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle" id="updateimg" src="../assets/images/user/2.png" alt="">
-                                      <div class="media-body mt-0">
-                                        <h5><span id="printname">Bucky </span><span id="printlast">Barnes</span></h5>
-                                        <p id="printmail">barnes@gmail.com</p>
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-iduser3" role="tabpanel" aria-labelledby="v-pills-iduser3-tab">
+                                          <div class="profile-mail">
+                                            <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle update_img_8" src="../assets/images/user/10.jpg" alt="">
+                                              <div class="media-body mt-0">
+                                                <h5> <span class="first_name_8">Andew </span><span class="last_name_8">Jon</span></h5>
+                                                <p class="email_add_8">andrewj@gmail.com</p>
+                                                <ul>
+                                                  <li><a href="#" onclick="printContact(8)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a></li>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                            <div class="email-general">
+                                              <h6>General</h6>
+                                              <p>Email Address: <span class="font-primary email_add_8">andrewj@gmail.com</span></p>
+                                              <div class="gender">
+                                                <h6>Personal</h6>
+                                                <p>Gender: <span>Female</span></p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                    <div class="email-general">
-                                      <h6>General</h6>
-                                      <p>Email Address: <span class="font-primary" id="mailadd">barnes@gmail.com   </span></p>
-                                    </div>
                                   </div>
-                                  <button class="btn btn-secondary" id="btnPrint" type="button" onclick="printDiv();">Print</button>
-
-                                  <button class="btn btn-primary" type="button" id="cancelButton" data-bs-dismiss="modal">Cancel</button>
-
-                                  <!-- <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button> -->
-                                   </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="right-history">
+                              <div class="modal-header p-l-20 p-r-20">
+                                <h6 class="modal-title w-100">Contact History<span class="pull-right"><a class="closehistory" href="#"><i class="icofont icofont-close"></i></a></span></h6>
+                              </div>
+                              <div class="history-details">
+                                <div class="text-center"><i class="icofont icofont-ui-edit"></i>
+                                  <p>Contact has not been modified yet.</p>
+                                </div>
+                                <div class="media"><i class="icofont icofont-star me-3"></i>
+                                  <div class="media-body mt-0">
+                                    <h6 class="mt-0">Contact Created</h6>
+                                    <p class="mb-0">Contact is created via mail</p><span class="f-12">Sep 10, 2019 4:00</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal fade modal-bookmark" id="printModal" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Print preview</h5>
+                                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body list-persons">
+                                    <div class="profile-mail pt-0" id="DivIdToPrint">
+                                      <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle" id="updateimg" src="../assets/images/user/2.png" alt="">
+                                        <div class="media-body mt-0">
+                                          <h5><span id="printname">Bucky </span><span id="printlast">Barnes</span></h5>
+                                          <p id="printmail">barnes@gmail.com</p>
+                                        </div>
+                                      </div>
+                                      <div class="email-general">
+                                        <h6>General</h6>
+                                        <p>Email Address: <span class="font-primary" id="mailadd">barnes@gmail.com   </span></p>
+                                      </div>
+                                    </div>
+                                    <button class="btn btn-secondary" id="btnPrint" type="button" onclick="printDiv();">Print</button>
+                                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                       
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
             </div>
+            <!-- Container-fluid Ends-->
           </div>
-          <!-- Container-fluid Ends-->
-        </div>
-        <!-- footer start-->
-        <%- include('footer'); -%>
+          <!-- footer start-->
+          <footer>
+            <%- include('footer'); -%>
+          </footer>
       </div>
-    </div>
-    <!-- latest jquery-->
-    <script src="../assets/js/jquery.min.js"></script>
-    <!-- Bootstrap js-->
-    <script src="../assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-    <!-- feather icon js-->
-    <script src="../assets/js/icons/feather-icon/feather.min.js"></script>
-    <script src="../assets/js/icons/feather-icon/feather-icon.js"></script>
-    <!-- scrollbar js-->
-    <script src="../assets/js/scrollbar/simplebar.js"></script>
-    <script src="../assets/js/scrollbar/custom.js"></script>
-    <!-- Sidebar jquery-->
-    <script src="../assets/js/config.js"></script>
-    <!-- Plugins JS start-->
-    <script src="../assets/js/sidebar-menu.js"></script>
-    <script src="../assets/js/sidebar-pin.js"></script>
-    <script src="../assets/js/slick/slick.min.js"></script>
-    <script src="../assets/js/slick/slick.js"></script>
-    <script src="../assets/js/header-slick.js"></script>
-    <script src="../assets/js/notify/bootstrap-notify.min.js"></script>
-    <script src="../assets/js/sweet-alert/sweetalert.min.js"></script>
-    <script src="../assets/js/select2/select2.full.min.js"></script>
-    <script src="../assets/js/select2/select2-custom.js"></script>
-    <script src="../assets/js/form-validation-custom.js"></script>
-    <script src="../assets/js/bookmark/jquery.validate.min.js"></script>
-    <script src="../assets/js/contacts/custom.js"></script>
-    <!-- Plugins JS Ends-->
-    <!-- Theme js-->
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/theme-customizer/customizer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </div>
+                    
+<!-- latest jquery-->
+<script src="../assets/js/jquery.min.js"></script>
+<!-- Bootstrap js-->
+<script
+  src="../assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- feather icon js-->
+<script
+  src="../assets/js/icons/feather-icon/feather.min.js"></script>
+<script
+  src="../assets/js/icons/feather-icon/feather-icon.js"></script>
+<!-- scrollbar js-->
+<script src="../assets/js/scrollbar/simplebar.js"></script>
+<script src="../assets/js/scrollbar/custom.js"></script>
+<!-- Sidebar jquery-->
+<script src="../assets/js/config.js"></script>
+<!-- Plugins JS start-->
+<script src="../assets/js/sidebar-menu.js"></script>
+<script src="../assets/js/sidebar-pin.js"></script>
+<script src="../assets/js/slick/slick.min.js"></script>
+<script src="../assets/js/slick/slick.js"></script>
+<script src="../assets/js/header-slick.js"></script>
+<script
+  src="../assets/js/notify/bootstrap-notify.min.js"></script>
+<script
+  src="../assets/js/sweet-alert/sweetalert.min.js"></script>
+<script src="../assets/js/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2/select2-custom.js"></script>
+<script src="../assets/js/form-validation-custom.js"></script>
+<script
+  src="../assets/js/bookmark/jquery.validate.min.js"></script>
+<script src="../assets/js/contacts/custom.js"></script>
+<!-- Plugins JS Ends-->
+<!-- Theme js-->
+<script src="../assets/js/script.js"></script>
+<script
+  src="../assets/js/theme-customizer/customizer.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    document.getElementById('showButton').addEventListener('click', function() {
-        axios.get('/fetch-contact-details')
-            .then(function(response) {
-                var contactDetails = response.data;
-                document.getElementById('fullNameSpan').textContent = contactDetails.full_name;
-                document.getElementById('whatsappNumberSpan').textContent = contactDetails.whatsapp_number;
-                document.getElementById('genderSpan').textContent = contactDetails.gender;
-                document.getElementById('birthdaySpan').textContent = contactDetails.birthday;
-                document.getElementById('citySpan').textContent = contactDetails.city;
-            })
-            .catch(function(error) {
-                console.error('Error fetching contact details:', error);
-            });
-    });
-</script>
+  $(document).ready(function () {
+    // Add event listener to the "Add" button in the modal
 
-<!-- Inside your contacts.ejs file -->
-<script>
-  document.getElementById('cancelButton').addEventListener('click', function() {
-      // Scroll to the profile-mail section
-      document.querySelector('.profile-mail').scrollIntoView({ 
-          behavior: 'smooth' 
+    $('#addContactBtn').click(function () {
+      // Get values from the form
+      var fullName = $('#fullName').val();
+      var whatsappNumber = $('#whatsappNumber').val();
+
+      // Prepare data to be sent via AJAX
+      var data = {
+        fullName: fullName,
+        whatsappNumber: whatsappNumber
+      };
+
+      // Send AJAX POST request to the server
+      event.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/add_contact', // URL to your server route for adding contacts
+        data: data,
+        success: function (response) {
+          // Handle success response
+          console.log(response);
+          // Optionally, you can update the UI or perform other actions here
+
+          // Display success message
+          $('#successMessage').fadeIn().delay(2000).fadeOut(); // Show message for 2 seconds
+
+
+
+        },
+        error: function (error) {
+          // Handle error response
+          console.error('Error:', error);
+        }
       });
+
+      // Close the modal
+      $('#exampleModal').modal('hide');
+    });
+
+    
+
+
   });
 </script>
 
 
+</body>
 
-  </body>
 </html>

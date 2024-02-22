@@ -199,62 +199,173 @@ router.post("/profile", (req, res) => {
 router.get('/contacts', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
-    const mobile_number = req.session.mobile_number;
-    const username = req.session.username; // Assuming username is stored in session
-    res.render('contacts', { mobile_number, username });
+    const userId = req.session.user_id; // Get the user ID from the session
+    const query = "SELECT contacts.* FROM contacts JOIN users ON contacts.admin_id = users.id WHERE users.id = ?";
+    db.query(query, [userId], (error, rows) => {
+      if (error) {
+        console.error(error); // Log error if any
+        res.send(err);
+      } else {
+        console.log(rows); // Log the fetched rows
+        const mobile_number = req.session.mobile_number;
+        const username = req.session.username;
+        res.render('contacts', { mobile_number, username, rows });    
+      }
+    });
   } else {
     // Redirect to login if not authenticated
     res.redirect('/');
   }
 });
 
-router.post('/save-contact', (req, res) => {
-  // Check if the user is authenticated
-  if (req.session.isAuthenticated) {
-    const { full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode } = req.body;
-    const admin_id = req.session.user_id; // Assuming user_id is stored in session
 
-    // Insert contact details into the database
-    const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    db.query(sql, [admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode], (err, result) => {
-      if (err) {
-        console.error('Error saving contact:', err);
-        res.render('error', { error: 'An error occurred while saving contact.' });
+router.post('/add_contact', (req, res) => {
+  if (req.session.isAuthenticated) {
+    const userId = req.session.user_id; // Get the user ID from the session
+    const fullName = req.body.fullName;
+    const whatsappNumber = req.body.whatsappNumber;
+  
+    // SQL query to insert the contact into the contacts table
+    const query = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number) VALUES (?, ?, ?)';
+  
+    // Execute the query
+    db.query(query, [userId, fullName, whatsappNumber], (error, result) => {
+      if (error) {
+        console.error('Error adding contact:', error);
+        res.status(500).json({ error: 'An error occurred while adding the contact.' });
       } else {
-        console.log('Contact saved successfully');
+        // Print form data and user ID to the console
+        console.log('User ID:', userId);
+        console.log('Full Name:', fullName);
+        console.log('WhatsApp Number:', whatsappNumber);
+        console.log('Contact added successfully!');
+        // Get the index of the newly added contact from the result
+         const newIndex = result.insertId; // Assuming your SQL database returns the ID of the newly inserted row
+         console.log('New Index', newIndex);
+
+                
+        // Send the index of the newly added contact as a response
+         res.status(200).json({ message: 'Contact added successfully!', newIndex: newIndex });
         
-        //res.redirect('/contacts'); // Redirect to contacts page after saving
-      }
-    });
-  } else {
-    res.redirect('/');
-  }
+    }
+});
+} else {
+res.status(401).json({ error: 'User not authenticated.' });
+}
 });
 
-router.get('/fetch-contact-details', (req, res) => {
-  // Check if the user is authenticated
-  if (req.session.isAuthenticated) {
-    const adminId = req.params.adminId;
+// router.get('/get_contact_data', (req, res) => {
+//   if (req.session.isAuthenticated) {
+//     const contactId = req.query.contactId; // Assuming you're passing the contact ID via query parameter
+//     const query = "SELECT * FROM contacts WHERE id = ?";
+//     db.query(query, [contactId], (error, rows) => {
+//       if (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'An error occurred while fetching contact data.' });
+//       } else {
+//         if (rows.length > 0) {
+//           const contactData = rows[0]; // Assuming the query returns only one row
+//           res.status(200).json(contactData);
+//         } else {
+//           res.status(404).json({ error: 'Contact not found.' });
+//         }
+//       }
+//     });
+//   } else {
+//     res.status(401).json({ error: 'User not authenticated.' });
+//   }
+// });
 
-    // Fetch contact details from the database using the adminId
-    const sql = 'SELECT full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode FROM contacts WHERE admin_id = ?';
-    db.query(sql, [adminId], (err, result) => {
-      if (err) {
-        console.error('Error fetching contact details:', err);
-        res.render('error', { error: 'An error occurred while fetching contact details.' });
-      } else {
-        if (result.length > 0) {
-          const contactDetails = result[0];
-          res.render('view-contact', { contactDetails });
-        } else {
-          res.render('error', { error: 'Contact not found.' });
-        }
-      }
-    });
-  } else {
-    res.redirect('/');
-  }
-});
+
+
+
+
+
+// router.post("/contacts", (req, res) => {
+//   // Check if the user is authenticated
+//   if (req.session.isAuthenticated) {
+//     const action = req.body.action;
+//     if (action === 'fetch') {
+//       // const admin_id = req.session.user_id;
+//       const query = "SELECT * FROM contacts";
+//       db.query(query, (error, data) => {
+//         if (error) {
+//           console.error('Error fetching sample data:', error);
+//           res.status(500).json({ error: 'An error occurred while fetching sample data.' });
+//         } else {
+//           res.json({ data });
+//         }
+//       });
+//     } else if (action === 'save') {
+//       const contactData = req.body.contactData;
+//       const admin_id = req.session.user_id;
+//       // Insert or update contact data in the database
+//       const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE full_name = VALUES(full_name), whatsapp_number = VALUES(whatsapp_number), m_f = VALUES(m_f), dob = VALUES(dob), address = VALUES(address), city = VALUES(city), state = VALUES(state), country = VALUES(country), pincode = VALUES(pincode)';
+//       db.query(sql, [admin_id, contactData.full_name, contactData.whatsapp_number, contactData.m_f, contactData.dob, contactData.address, contactData.city, contactData.state, contactData.country, contactData.pincode], (err, data) => {
+//         if (err) {
+//           console.error('Error saving contact data:', err);
+//           res.status(500).json({ error: 'An error occurred while saving contact data.' });
+//         } else {
+//           res.json({ message: 'Contact data saved successfully.' });
+//         }
+//       });
+//     } else {
+//       res.status(400).json({ error: 'Invalid action' });
+//     }
+//   } else {
+//     res.status(401).json({ error: 'Unauthorized' });
+//   }
+// });
+
+
+
+// router.post('/save-contact', (req, res) => {
+//   // Check if the user is authenticated
+//   if (req.session.isAuthenticated) {
+//     const { full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode } = req.body;
+//     const admin_id = req.session.user_id; // Assuming user_id is stored in session
+
+//     // Insert contact details into the database
+//     const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+//     db.query(sql, [admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode], (err, result) => {
+//       if (err) {
+//         console.error('Error saving contact:', err);
+//         res.render('error', { error: 'An error occurred while saving contact.' });
+//       } else {
+//         console.log('Contact saved successfully');
+        
+//         //res.redirect('/contacts'); // Redirect to contacts page after saving
+//       }
+//     });
+//   } else {
+//     res.redirect('/');
+//   }
+// });
+
+// router.get('/fetch-contact-details', (req, res) => {
+//   // Check if the user is authenticated
+//   if (req.session.isAuthenticated) {
+//     const adminId = req.params.adminId;
+
+//     // Fetch contact details from the database using the adminId
+//     const sql = 'SELECT full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode FROM contacts WHERE admin_id = ?';
+//     db.query(sql, [adminId], (err, result) => {
+//       if (err) {
+//         console.error('Error fetching contact details:', err);
+//         res.render('error', { error: 'An error occurred while fetching contact details.' });
+//       } else {
+//         if (result.length > 0) {
+//           const contactDetails = result[0];
+//           res.render('view-contact', { contactDetails });
+//         } else {
+//           res.render('error', { error: 'Contact not found.' });
+//         }
+//       }
+//     });
+//   } else {
+//     res.redirect('/');
+//   }
+// });
 
 
 
