@@ -196,6 +196,9 @@ router.post("/profile", (req, res) => {
 
 
 
+
+
+
 router.get('/contacts', function (req, res, next) {
   // Check if the user is authenticated before rendering the dashboard
   if (req.session.isAuthenticated) {
@@ -217,6 +220,99 @@ router.get('/contacts', function (req, res, next) {
     res.redirect('/');
   }
 });
+
+
+
+router.post('/contacts/:index', (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.isAuthenticated) {
+    const action = req.body.action;
+    const index = req.params.index;
+    const userId = req.session.user_id;
+
+    if (action === 'fetch') {
+      const query = "SELECT contacts.* FROM contacts JOIN users ON contacts.admin_id = users.id WHERE users.id = ?";
+      db.query(query, [userId], (error, rows) => {
+        if (error) {
+          console.error(error); // Log error if any
+          res.status(500).json({ error: 'An error occurred while fetching contact details.' });
+        } else {
+          console.log(rows); // Log the fetched rows
+          const contactData = rows[index];
+          if (contactData) {
+            res.json(contactData);
+          } else {
+            res.status(404).json({ error: 'Contact not found.' });
+          }
+        }
+      });
+    }
+  } else {
+    res.status(403).json({ error: 'User is not authenticated.' });
+  }
+});
+
+
+
+
+// // Route to fetch contact details
+// router.get('/fetch-contact-details/:index', (req, res) => {
+//   const index = req.params.index;
+//   const userId = req.session.user_id;
+
+//   const query = "SELECT contacts.* FROM contacts JOIN users ON contacts.admin_id = users.id WHERE users.id = ?";
+//   db.query(query, [userId], (error, rows) => {
+//     if (error) {
+//       console.error(error); // Log error if any
+//       res.status(500).json({ error: 'An error occurred while fetching contact details.' });
+//     } else {
+//       console.log(rows); // Log the fetched rows
+//       const contactData = rows[index];
+//       res.json(contactData);
+//       if (contactData) {
+//         res.json(contactData);
+//       } else {
+//         res.status(404).json({ error: 'Contact not found.' });
+//       }
+//     }
+//   });
+// });
+
+router.put('/update-contact', (req, res) => {
+  const contactId = req.body.contactId;
+  const fullName = req.body.fullName;
+  const whatsappNumber = req.body.whatsappNumber;
+  const gender = req.body.gender; // assuming you have a field for gender
+  const dob = req.body.dob;
+  const address = req.body.address;
+  const city = req.body.city;
+  const state = req.body.state;
+  const country = req.body.country;
+  const pincode = req.body.pincode;
+  
+  // Use an SQL UPDATE query to update the contact data
+  const sql = `
+      UPDATE contacts 
+      SET full_name = ?, whatsapp_number = ?, gender = ?, dob = ?, address = ?, city = ?, state = ?, country = ?, pincode = ? 
+      WHERE id = ?`;
+      
+  db.query(sql, [fullName, whatsappNumber, gender, dob, address, city, state, country, pincode, contactId], (err, result) => {
+      if (err) {
+          console.error('Error updating contact:', err);
+          res.status(500).json({ error: 'An error occurred while updating contact.' });
+      } else {
+          if (result.affectedRows > 0) {
+              console.log('Contact updated successfully');
+              res.status(200).json({ message: 'Contact updated successfully' });
+          } else {
+              console.error('Contact not found or no changes made');
+              res.status(404).json({ error: 'Contact not found or no changes made' });
+          }
+      }
+  });
+});
+
+
 
 
 router.post('/add_contact', (req, res) => {
@@ -253,6 +349,41 @@ router.post('/add_contact', (req, res) => {
 res.status(401).json({ error: 'User not authenticated.' });
 }
 });
+
+// router.post('/edit_contact', (req, res) => {
+//   if (req.session.isAuthenticated) {
+//     const userId = req.session.user_id; // Get the user ID from the session
+//     const contactId = req.body.contactId; // Assuming you're passing the contact ID from the frontend
+//     const fullName = req.body.fullName;
+//     const whatsappNumber = req.body.whatsappNumber;
+  
+//     // SQL query to update the contact in the contacts table
+//     const query = 'UPDATE contacts SET full_name = ?, whatsapp_number = ? WHERE id = ? AND admin_id = ?';
+  
+//     // Execute the query
+//     db.query(query, [fullName, whatsappNumber, contactId, userId], (error, result) => {
+//       if (error) {
+//         console.error('Error updating contact:', error);
+//         res.status(500).json({ error: 'An error occurred while updating the contact.' });
+//       } else {
+//         // Check if the contact was found and updated
+//         if (result.affectedRows === 0) {
+//           // If no contact was updated, it means either the contact doesn't exist or it belongs to another user
+//           res.status(404).json({ error: 'Contact not found or unauthorized to edit.' });
+//         } else {
+//           // Contact updated successfully
+//           console.log('Contact updated successfully!');
+//           res.status(200).json({ message: 'Contact updated successfully!' });
+//         }
+//       }
+//     });
+//   } else {
+//     res.status(401).json({ error: 'User not authenticated.' });
+//   }
+// });
+
+
+
 
 // router.get('/get_contact_data', (req, res) => {
 //   if (req.session.isAuthenticated) {
@@ -300,8 +431,8 @@ res.status(401).json({ error: 'User not authenticated.' });
 //       const contactData = req.body.contactData;
 //       const admin_id = req.session.user_id;
 //       // Insert or update contact data in the database
-//       const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE full_name = VALUES(full_name), whatsapp_number = VALUES(whatsapp_number), m_f = VALUES(m_f), dob = VALUES(dob), address = VALUES(address), city = VALUES(city), state = VALUES(state), country = VALUES(country), pincode = VALUES(pincode)';
-//       db.query(sql, [admin_id, contactData.full_name, contactData.whatsapp_number, contactData.m_f, contactData.dob, contactData.address, contactData.city, contactData.state, contactData.country, contactData.pincode], (err, data) => {
+//       const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, gender, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE full_name = VALUES(full_name), whatsapp_number = VALUES(whatsapp_number), gender = VALUES(gender), dob = VALUES(dob), address = VALUES(address), city = VALUES(city), state = VALUES(state), country = VALUES(country), pincode = VALUES(pincode)';
+//       db.query(sql, [admin_id, contactData.full_name, contactData.whatsapp_number, contactData.gender, contactData.dob, contactData.address, contactData.city, contactData.state, contactData.country, contactData.pincode], (err, data) => {
 //         if (err) {
 //           console.error('Error saving contact data:', err);
 //           res.status(500).json({ error: 'An error occurred while saving contact data.' });
@@ -322,12 +453,12 @@ res.status(401).json({ error: 'User not authenticated.' });
 // router.post('/save-contact', (req, res) => {
 //   // Check if the user is authenticated
 //   if (req.session.isAuthenticated) {
-//     const { full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode } = req.body;
+//     const { full_name, whatsapp_number, gender, dob, address, city, state, country, pincode } = req.body;
 //     const admin_id = req.session.user_id; // Assuming user_id is stored in session
 
 //     // Insert contact details into the database
-//     const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-//     db.query(sql, [admin_id, full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode], (err, result) => {
+//     const sql = 'INSERT INTO contacts (admin_id, full_name, whatsapp_number, gender, dob, address, city, state, country, pincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+//     db.query(sql, [admin_id, full_name, whatsapp_number, gender, dob, address, city, state, country, pincode], (err, result) => {
 //       if (err) {
 //         console.error('Error saving contact:', err);
 //         res.render('error', { error: 'An error occurred while saving contact.' });
@@ -348,7 +479,7 @@ res.status(401).json({ error: 'User not authenticated.' });
 //     const adminId = req.params.adminId;
 
 //     // Fetch contact details from the database using the adminId
-//     const sql = 'SELECT full_name, whatsapp_number, m_f, dob, address, city, state, country, pincode FROM contacts WHERE admin_id = ?';
+//     const sql = 'SELECT full_name, whatsapp_number, gender, dob, address, city, state, country, pincode FROM contacts WHERE admin_id = ?';
 //     db.query(sql, [adminId], (err, result) => {
 //       if (err) {
 //         console.error('Error fetching contact details:', err);
