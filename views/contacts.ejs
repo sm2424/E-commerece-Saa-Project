@@ -105,7 +105,7 @@
                               <div class="card mb-0">
                                 
                                 <div class="card-header d-flex">
-                                  <!-- Placeholder for "Shiv" -->
+                                  <!-- Placeholder -->
                                   <div class="flex-start"><h5>Contacts [ 
                                     <span>
                                       <%= rows.length %>
@@ -118,40 +118,158 @@
                                   </div>                                         
                                   
                                   <!-- Add button -->
-                                  <button type="button" id="add_data" class="btn btn-success btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+                                  <button type="button" id="add_data" class="btn btn-success btn-sm float-end" data-bs-toggle="modal" data-bs-target="#contactsFormModal">Add</button>
                                  
                                 </div>  
 
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="contactsFormModal" tabindex="-1" aria-labelledby="contactsFormModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                
-                                      <div class="modal-body">
-                                        <form id="addContactForm">
-                                          <div class="mb-3">
-                                            <label for="fullName" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="fullName" required>
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="addcontact">Add Contact</h5>
+                                              <h5 class="modal-title" id="editcontact">Edit Contact</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                           </div>
-                                          <div class="mb-3">
-                                            <label for="whatsappNumber" class="form-label">WhatsApp Number</label>
-                                            <input type="text" class="form-control" id="whatsappNumber" required>
+                              
+                                          <div class="modal-body">
+                                              <form id="contactsForm">
+                                                  <div class="mb-3">
+                                                      <label for="contactFullName" class="form-label">Full Name</label>
+                                                      <input type="text" class="form-control" id="contactFullName" required>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="contactWhatsappNumber" class="form-label">WhatsApp Number</label>
+                                                      <input type="text" class="form-control" id="contactWhatsappNumber" required>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <div class="mt-0 mb-3 col-md-15">
+                                                          <div class="row">
+                                                              <div class="col-sm-3">
+                                                                  <label>Gender</label>
+                                                                  <div class="d-block">
+                                                                      <label class="me-3" for="contactGenderMale">
+                                                                          <input class="radio_animated" id="contactGenderMale" type="radio" name="contactGender" checked value="Male">
+                                                                          <span>Male</span>
+                                                                      </label>
+                                                                      <label for="contactGenderFemale">
+                                                                          <input class="radio_animated" id="contactGenderFemale" type="radio" name="contactGender" value="Female">
+                                                                          <span>Female</span>
+                                                                      </label>
+                                                                  </div>
+                                                              </div>
+                              
+                                                              <div class="col-sm-9">
+                                                                  <label>Date of Birth</label>
+                                                                  <div class="row">
+                                                                      <div class="col-lg-3 col-sm-5">
+                                                                          <select class="form-control" id="contactBirthDay" placeholder="Day">
+                                                                              
+                                                                              <option>01</option>
+                                                                              <option>02</option>
+                                                                              <option>03</option>
+                                                                              <option>04</option>
+                                                                              <option>05</option>
+                                                                              <option>06</option>
+                                                                              <option>07</option>
+                                                                              <option>08</option>
+                                                                              <option>09</option>
+                                                                              <option>10</option>
+                                                                              <option>11</option>
+                                                                              <option>12</option>
+                                                                              <option>13</option>
+                                                                              <option>14</option>
+                                                                              <option>15</option>
+                                                                              <option>16</option>
+                                                                              <option>17</option>
+                                                                              <option>18</option>
+                                                                              <option>19</option>
+                                                                              <option>20</option>
+                                                                              <option>21</option>
+                                                                              <option>22</option>
+                                                                              <option>23</option>
+                                                                              <option>24</option>
+                                                                              <option>25</option>
+                                                                              <option>26</option>
+                                                                              <option>27</option>
+                                                                              <option>28</option>
+                                                                              <option>29</option>
+                                                                              <option>30</option>
+                                                                              <option>31</option>
+                                                                                                          
+                                                                          </select>
+                                                                      </div>
+                                                                      <div class="col-lg-3 col-sm-4">
+                                                                          <select class="form-control" id="contactBirthMonth" placeholder="Month">
+                                                                              
+                                                                              <option>01</option>
+                                                                              <option>02</option>
+                                                                              <option>03</option>
+                                                                              <option>04</option>
+                                                                              <option>05</option>
+                                                                              <option>06</option>
+                                                                              <option>07</option>
+                                                                              <option>08</option>
+                                                                              <option>09</option>
+                                                                              <option>10</option>
+                                                                              <option>11</option>
+                                                                              <option>12</option>
+                                                                          </select>
+                                                                      </div>
+                                                                      <div class="col-lg-3 col-sm-4">
+                                                                          <input class="form-control" id="contactBirthYear" type="text" placeholder="Year">
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="mb-3 col-md-12">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="mb-2">
+                                                                  <label for="contactAddress" class="form-label">Address</label>
+                                                                  <input type="text" class="form-control" id="contactAddress" required>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-sm-6">
+                                                              <div class="mb-2">
+                                                                  <label for="contactCity" class="form-label">City</label>
+                                                                  <input type="text" class="form-control" id="contactCity" required>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-sm-6">
+                                                              <div class="mb-2">
+                                                                  <label for="contactState" class="form-label">State</label>
+                                                                  <input class="form-control" type="text" id="contactState" required>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-sm-6">
+                                                              <div>
+                                                                  <label for="contactCountry" class="form-label">Country</label>
+                                                                  <input class="form-control" type="text" id="contactCountry" required>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-sm-6">
+                                                              <div>
+                                                                  <label for="contactPincode" class="form-label">Pincode</label>
+                                                                  <input class="form-control" type="text" id="contactPincode" required>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
                                           </div>
-                                        </form>
+                              
+                                          <div class="modal-footer">
+                                              
+                                              <button type="button" class="btn btn-primary" id="addContactBtn">Add</button>
+                                              <button type="button" class="btn btn-primary" id="SaveContactBtn">Save</button>
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          </div>
                                       </div>
-                                      
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="addContactBtn">Add</button>
-                                      </div>
-                                    </div>
                                   </div>
-                                </div>
-                                
-
+                              </div>
+                              
                                 <span id="message"></span>
                                 <div class="card-body p-0">
                                   <div class="row list-persons" id="addcon">
@@ -204,20 +322,14 @@
                                                   </h5>
                                                   <p class="whatsapp_number<%= index %>"> <%= eachData.whatsapp_number %> </p>
                                                   <ul>
+                                                    
                                                     <li>
-                                                      <a href="#" class="editContactLink text-success" data-index="<%= index %>" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>                                                                                                                                                       
-                                                      
-                                                     
+                                                        <a href="#" class="editContactLink text-success"  data-contact-id="<%= eachData.id %>" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
                                                     </li>
                                                     <li>
                                                       <a href="#" onclick="deleteContact(<%= index %>)">Delete</a>
                                                     </li>
-                                                    <li>
-                                                      <a href="#" onclick="history(<%= index %>)">History</a>
-                                                    </li>
-                                                    <li>
-                                                      <a href="#" onclick="printContact(<%= index %>)" data-bs-toggle="modal" data-bs-target="#printModal">Print</a>
-                                                    </li>
+                                                   
                                                   </ul>
                                                 </div>
                                               </div>
@@ -227,7 +339,7 @@
                                                   <li>Full Name <span class="font-primary"> <%= eachData.full_name %> </span></li>
                                                   <li>Whatsapp number <span class="font-primary"> <%= eachData.whatsapp_number %> </span></li>
                                                   <li>Gender <span class="font-primary"> <%= eachData.gender %> </span></li>
-                                                  <li>Birthday <span class="font-primary"> <%= eachData.dob %> </span></li>
+                                                  <li>Birthday <span class="font-primary"> <%= new Date(eachData.dob).toLocaleDateString('en-GB') %> </span></li> <!-- Format the date here -->
                                                   <li>Address <span class="font-primary"> <%= eachData.address %> </span></li>
                                                   <li>City <span class="font-primary"> <%= eachData.city %> </span></li>
                                                   <li>State <span class="font-primary"> <%= eachData.state %> </span></li>
@@ -247,214 +359,6 @@
                               </div>
                             </div>
                             <!-- tab panel end -->
-                                      <!-- edit -->
-                                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel">Edit Contact</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                
-                                      <div class="modal-body">
-                                        <form id="addContactForm">
-                                          <div class="mb-3">
-                                            <label for="fullName" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="editFullName" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="whatsappNumber" class="form-label">WhatsApp Number</label>
-                                            <input type="text" class="form-control" id="editWhatsappNumber" required>
-                                          </div>
-
-                                          <div class="mb-3">                
-                                            <div class="mt-0 mb-3 col-md-15">
-                                              <div class="row">
-                                                <div class="col-sm-3">
-                                                  <label>Gender</label>
-                                                  <div class="d-block">
-                                                      <label class="me-3" for="editgender_male">
-                                                          <input class="radio_animated" id="editgender_male" type="radio" name="editGender" checked>
-                                                          <span>Male</span>                                          
-                                                      </label>
-                                                      <label for="editgender_female">
-                                                          <input class="radio_animated" id="editgender_female" type="radio" name="editGender">
-                                                          <span>Female</span>
-                                                      </label>
-                                                  </div>
-                                              </div>
-                                              
-                                          
-                                                <div class="col-sm-9">
-                                                  <label>DOB</label>
-                                                  <div class="row">
-                                                    <div class="col-lg-3 col-sm-5">
-                                                      <select class="form-control" id="editbirth_day">
-                                                        <option class="f-w-600">Day</option>
-                                                        <option>01</option>
-                                                        <option>02</option>
-                                                        <option>03</option>
-                                                        <option>04</option>
-                                                        <option>05</option>
-                                                        <option>06</option>
-                                                        <option>07</option>
-                                                        <option>08</option>
-                                                        <option>09</option>
-                                                        <option>10</option>
-                                                        <option>11</option>
-                                                        <option>12</option>
-                                                        <option>13</option>
-                                                        <option>14</option>
-                                                        <option>15</option>
-                                                        <option>16</option>
-                                                        <option>17</option>
-                                                        <option>18</option>
-                                                        <option>19</option>
-                                                        <option>20</option>
-                                                        <option>21</option>
-                                                        <option>22</option>
-                                                        <option>23</option>
-                                                        <option>24</option>
-                                                        <option>25</option>
-                                                        <option>26</option>
-                                                        <option>27</option>
-                                                        <option>28</option>
-                                                        <option>29</option>
-                                                        <option>30</option>
-                                                        <option>31</option>
-                                                      </select>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-4">
-                                                      <select class="form-control" id="editbirth_month">
-                                                        <option class="f-w-600">Month</option>
-                                                        <option>January</option>
-                                                        <option>February</option>
-                                                        <option>March</option>
-                                                        <option>April</option>
-                                                        <option>May</option>
-                                                        <option>June</option>
-                                                        <option>July</option>
-                                                        <option>August</option>
-                                                        <option>September</option>
-                                                        <option>October</option>
-                                                        <option>November</option>
-                                                        <option>December</option>
-                                                      </select>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-4">
-                                                      <input class="form-control" id="editbirth_year" type="text">
-                                                    </div>
-                                                  </div>
-                                                 </div>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          
-
-                                          <div class="mb-3 col-md-12">
-                                            <div class="row">
-                                              <div class="col-12">
-                                                <div class="mb-2">
-                                                  <label for="address" class="form-label">Address</label>
-                                                  <input type="text" class="form-control" id="editAddress" required>
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div class="mb-2">
-                                                  <label for="city" class="form-label">City</label>
-                                                  <input type="text" class="form-control" id="editCity" required>
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div class="mb-2">
-                                                  <label for="state" class="form-label">State</label>
-                                                  <input class="form-control" type="text" id="editState" required>
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div>
-                                                  <label for="state" class="form-label">Country</label>
-                                                  <input class="form-control" type="text" id="editCountry" required>
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-6">
-                                                <div>
-                                                  <label for="pincode" class="form-label">Pincode</label>
-                                                  <input class="form-control" type="text" id="editPincode" required>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                                                                   
-                                        </form>
-                                      </div>
-
-
-
-                                      
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-primary" id="saveContactBtn">Save</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                          
-
-
-                            <div class="fade tab-pane" id="pills-organization" role="tabpanel" aria-labelledby="pills-organization">
-                              <div class="card mb-0">
-                                <div class="card-header d-flex">
-                                  <h5>Organization</h5><span class="f-14 pull-right mt-0">10 Contacts</span>
-                                </div>
-                                <div class="card-body p-0">
-                                </div>
-                              </div>
-                            </div>
-
-                            <div id="right-history">
-                              <div class="modal-header p-l-20 p-r-20">
-                                <h6 class="modal-title w-100">Contact History<span class="pull-right"><a class="closehistory" href="#"><i class="icofont icofont-close"></i></a></span></h6>
-                              </div>
-                              <div class="history-details">
-                                <div class="text-center"><i class="icofont icofont-ui-edit"></i>
-                                  <p>Contact has not been modified yet.</p>
-                                </div>
-                                <div class="media"><i class="icofont icofont-star me-3"></i>
-                                  <div class="media-body mt-0">
-                                    <h6 class="mt-0">Contact Created</h6>
-                                    <p class="mb-0">Contact is created via mail</p><span class="f-12">Sep 10, 2019 4:00</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal fade modal-bookmark" id="printModal" tabindex="-1" role="dialog" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title">Print preview</h5>
-                                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body list-persons">
-                                    <div class="profile-mail pt-0" id="DivIdToPrint">
-                                      <div class="media"><img class="img-100 img-fluid m-r-20 rounded-circle" id="updateimg" src="../assets/images/user/2.png" alt="">
-                                        <div class="media-body mt-0">
-                                          <h5><span id="printname">Bucky </span><span id="printlast">Barnes</span></h5>
-                                          <p id="printmail">barnes@gmail.com</p>
-                                        </div>
-                                      </div>
-                                      <div class="email-general">
-                                        <h6>General</h6>
-                                        <p>Email Address: <span class="font-primary" id="mailadd">barnes@gmail.com   </span></p>
-                                      </div>
-                                    </div>
-                                    <button class="btn btn-secondary" id="btnPrint" type="button" onclick="printDiv();">Print</button>
-                                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -510,137 +414,226 @@
   src="../assets/js/theme-customizer/customizer.js"></script>
 <script
   src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
- 
-  $(document).ready(function () {
+  <script>
+    $(document).ready(function () {
+      // Function to refresh contact list
+  function refreshContactList() {
+    // Perform AJAX GET request to fetch updated contact list
+    $.ajax({
+      type: "GET",
+      url: "/fetch_contacts", // Endpoint to fetch contacts data
+      success: function (response) {
+        // Update the contact list with new data
+        $('.list-persons').html(response);
+      },
+      error: function (error) {
+        console.error('Error fetching contacts:', error);
+        // Optionally, display an error message to the user
+      }
+    });
+  }
 
-    // Add event listener to the "Add" button in the modal
+      // Attach click event handler to the Add button
+      $("#addContactBtn").click(function () {
 
-    $('#addContactBtn').click(function () {
-      // Get values from the form
-      var fullName = $('#fullName').val();
-      var whatsappNumber = $('#whatsappNumber').val();
+        // Retrieve values of the required fields
+        var fullName = $("#contactFullName").val().trim();
+        var whatsappNumber = $("#contactWhatsappNumber").val().trim();
 
-      // Prepare data to be sent via AJAX
-      var data = {
-        fullName: fullName,
-        whatsappNumber: whatsappNumber
-      };
-
-      // Send AJAX POST request to the server
-      event.preventDefault();
-      $.ajax({
-        type: 'POST',
-        url: '/add_contact', // URL to your server route for adding contacts
-        data: data,
-        success: function (response) {
-          // Handle success response
-          console.log(response);
-          // Optionally, you can update the UI or perform other actions here
-
-          // Display success message
-          $('#successMessage').fadeIn().delay(2000).fadeOut(); // Show message for 2 seconds
-
-        },
-        error: function (error) {
-          // Handle error response
-          console.error('Error:', error);
+        // Check if the required fields are empty
+        if (fullName === '' || whatsappNumber === '') {
+          alert('Please fill in the Full Name and WhatsApp Number fields.');
+          return; // Exit the function if validation fails
         }
+
+        // Retrieve values of all form fields
+        var fullName = $("#contactFullName").val();
+        var whatsappNumber = $("#contactWhatsappNumber").val();
+        var gender = $("input[name='contactGender']:checked").val();
+        var birthDay = $("#contactBirthDay").val() || '01'; // Default day if not provided
+        var birthMonth = $("#contactBirthMonth").val() || '01'; // Default month if not provided
+        var birthYear = $("#contactBirthYear").val() || '1000'; // Default year if not provided
+        var address = $("#contactAddress").val().trim() || null;
+        var city = $("#contactCity").val().trim() || null;
+        var state = $("#contactState").val().trim() || null;
+        var country = $("#contactCountry").val().trim() || null;
+        var pincode = $("#contactPincode").val().trim() || null;
+
+
+        // Determine the gender label based on the selected radio button
+        var gender = $("input[name='contactGender']:checked").val() === 'contactGenderMale' ? 'Female' : 'Male';
+
+        // Combine day, month, and year into a single date format
+        var dob = birthYear + '-' + birthMonth + '-' + birthDay;
+
+
+        // Prepare data to be sent to the server
+        var formData = {
+          fullName: fullName,
+          whatsappNumber: whatsappNumber,
+          gender: gender,
+          dob: dob,
+          address: address,
+          city: city,
+          state: state,
+          country: country,
+          pincode: pincode
+        };
+
+        // Perform AJAX POST request to add the contact
+        $.ajax({
+          type: "POST",
+          url: "/add_contact",
+          data: formData,
+          success: function (response) {
+            // Log success message and the index of the newly added contact
+            console.log(response.message);
+            console.log('New Contact ID:', response.newIndex);
+            // Optionally, you can perform additional actions here, such as showing a success message to the user
+            $('#successMessage').show(); // Show success message
+            $('#contactsFormModal').modal('hide'); // Hide the modal
+
+            
+            setTimeout(function() {
+            $('#successMessage').hide(); 
+            }, 1000); 
+
+            // Close the modal
+        $('#contactsFormModal').modal('hide');
+
+        // Refresh contact list
+        //refreshContactList();
+            
+          },
+          error: function (error) {
+            // Log error message if the request fails
+            console.error('Error adding contact:', error.responseJSON.error);
+            // Optionally, you can display an error message to the user
+          }
+        });
       });
 
-      // Close the modal
-      $('#exampleModal').modal('hide');
+      // Event listener for the Edit link
+      var currentContactId; // Variable to store the current contact ID
+      $(document).on('click', '.editContactLink', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        $('#contactsFormModal').modal('show'); // Show the modal
+
+
+        currentContactId = $(this).data('contact-id'); // Store the current contact ID
+        console.log('Contact ID:', currentContactId);
+
+       
+
+        // Perform AJAX GET request to fetch contact details based on contact ID
+        $.ajax({
+          type: "GET",
+          url: "/get_contact_details", // Update the URL to your endpoint
+          data: { contactId: currentContactId },
+          success: function (response) {
+            var contactDetails = response.contactDetails;
+            $("#contactFullName").val(contactDetails.full_name);
+            $("#contactWhatsappNumber").val(contactDetails.whatsapp_number);
+            $("#contactAddress").val(contactDetails.address);
+            $("#contactCity").val(contactDetails.city);
+            $("#contactState").val(contactDetails.state);
+            $("#contactCountry").val(contactDetails.country);
+            $("#contactPincode").val(contactDetails.pincode);
+
+            // Set gender radio button based on fetched gender value
+            $("input[name='contactGender'][value='" + contactDetails.gender + "']").prop('checked', true);
+
+            // Parse date string to get individual components
+            var dob = new Date(contactDetails.dob);
+            var birthDay = dob.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+            var birthMonth = (dob.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-based
+            var birthYear = dob.getFullYear();
+            console.log(birthDay, birthMonth, birthYear); // To print date in console  for varifaction
+            // Set birthdate dropdown values
+            $("#contactBirthDay").val(birthDay);
+            $("#contactBirthMonth").val(birthMonth);
+            $("#contactBirthYear").val(birthYear);
+
+          },
+          error: function (error) {
+
+            console.error('Error fetching contact details:', error);
+
+          }
+        });
+        $('#addcontact').hide();
+        $('#editcontact').show();
+        $('#addContactBtn').hide();
+        $('#SaveContactBtn').show();
+      });
+
+      $("#add_data").click(function () {
+
+        $('#addcontact').show();
+        $('#editcontact').hide();
+        $('#addContactBtn').show();
+        $('#SaveContactBtn').hide();
+      });
+      // Event listener for the "Save" button
+      $("#SaveContactBtn").click(function () {
+        // Retrieve the updated values from the form fields
+        var fullName = $("#contactFullName").val().trim();
+        var whatsappNumber = $("#contactWhatsappNumber").val().trim();
+        var gender = $("input[name='contactGender']:checked").val();
+        var birthDay = $("#contactBirthDay").val() || '01';
+        var birthMonth = $("#contactBirthMonth").val() || '01';
+        var birthYear = $("#contactBirthYear").val() || '1000';
+        var address = $("#contactAddress").val().trim() || null;
+        var city = $("#contactCity").val().trim() || null;
+        var state = $("#contactState").val().trim() || null;
+        var country = $("#contactCountry").val().trim() || null;
+        var pincode = $("#contactPincode").val().trim() || null;
+
+
+        // Combine day, month, and year into a single date format
+        var dob = birthYear + '-' + birthMonth + '-' + birthDay;
+
+        // Prepare the updated data to be sent to the server
+        var updatedData = {
+          fullName: fullName,
+          whatsappNumber: whatsappNumber,
+          gender: gender,
+          dob: dob,
+          address: address,
+          city: city,
+          state: state,
+          country: country,
+          pincode: pincode,
+          contactId: currentContactId // Use the stored contact ID
+        };
+
+        // Perform an AJAX POST request to update the contact data
+        $.ajax({
+          type: "POST",
+          url: "/update_contact", // Change the URL to your endpoint for updating contacts
+          data: updatedData,
+          success: function (response) {
+            console.log(response.message); // Log success message
+            // Optionally, perform additional actions such as showing a success message to the user
+            $('#contactsFormModal').modal('hide');
+          },
+          error: function (error) {
+            console.error('Error updating contact:', error.responseJSON.error); // Log error message
+            // Optionally, display an error message to the user
+          }
+        });
+      });
+
+
+
+
+
+
     });
 
 
-    $(document).on('click', '.editContactLink', function () {
-      console.log("Edit button clicked"); // Debugging statement
-      // Get the index of the user
-      var index = $(this).data('index');
-      var contactId = ''; // Declare contactId variable here
-      console.log(index);
-      // Make an AJAX request to fetch the contact details
-      $.ajax({
-          method: 'POST', // Specify the HTTP method as POST
-          url: '/contacts/' + index, // Pass the index to the route
-          data: { index: index, action: 'fetch' }, // Include data to be sent to the server
-          dataType: 'json', // Specify the expected data type of the response
-          success: function (contactData) {
-              // Populate the form fields with the contact's details
-              $('#editFullName').val(contactData.full_name);
-              $('#editWhatsappNumber').val(contactData.whatsapp_number);
-              // Set gender
-              $('input[name="rdo-ani"]').prop('checked', false); // Uncheck all first
-              if (contactData.gender === 'Male') {
-                  $('#editgender_male').prop('checked', true);
-              } else {
-                  $('#editgender_female').prop('checked', true);
-              }
-              // Set DOB
-              var dob = new Date(contactData.dob);
-              $('#editbirth_day').val(dob.getDate());
-              $('#editbirth_month').val(dob.getMonth() + 1); // Months are zero-based
-              $('#editbirth_year').val(dob.getFullYear());
-              $('#editAddress').val(contactData.address);
-              $('#editCity').val(contactData.city);
-              $('#editState').val(contactData.state);
-              $('#editCountry').val(contactData.country);
-              $('#editPincode').val(contactData.pincode);
-              contactId = contactData.id; // Store the contactId in the variable
-              $('#saveContactBtn').data('contactId', contactId);
-          },
-          error: function (error) {
-              console.error('Error fetching contact details:', error);
-              // Handle error appropriately, e.g., show an alert
-          }
-      });
-  });
-    
-      
-  
-    
-      // Event listener for the "Save" button in the edit modal
-      $('#saveContactBtn').click(function () {
-        // Capture the updated data from the form fields
-        var fullName = $('#editFullName').val();
-        var whatsappNumber = $('#editWhatsappNumber').val();
-        var contactId = $(this).data('contactId'); // Retrieve contactId from data attribute
-        
-        // Make an AJAX request to update the contact data
-        $.ajax({
-            type: 'PUT', // Use PUT method for update operation
-            url: '/update-contact', // Route for updating contact data
-            data: {
-                contactId: contactId,
-                fullName: fullName,
-                whatsappNumber: whatsappNumber,
-                // Add more fields if needed
-            },
-            success: function (response) {
-                // Handle success response
-                console.log('Contact updated successfully');
-                // Optionally, close the edit modal or perform other actions
-            },
-            error: function (error) {
-                // Handle error response
-                console.error('Error updating contact:', error);
-                // Optionally, show an error message to the user
-            }
-        });
-      });
-      
-  
-    
-
-    
-  });
 
 
-    
-
-
-
-  
-</script>
+  </script>
 </body>
 </html>
