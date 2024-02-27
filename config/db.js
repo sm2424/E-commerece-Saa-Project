@@ -10,7 +10,7 @@ db.connect((err) => {
     if (err) {
       throw err;
     }
-    console.log('MySQL Connected...id ' + db.threadId);
+    console.log('MySQL Connected...');
   });
 
 global.db = db;

@@ -332,6 +332,34 @@ router.get('/fetch_contacts', (req, res) => {
   }
 });
 
+router.post('/delete_contact', (req, res) => {
+  if (req.session.isAuthenticated) {
+    const userId = req.session.user_id; // Get the user ID from the session
+    const contactId = req.body.contactId; // Get the ID of the contact to delete
+
+    // SQL query to delete the contact from the contacts table
+    const query = 'DELETE FROM contacts WHERE id = ? AND admin_id = ?';
+
+    // Execute the query
+    db.query(query, [contactId, userId], (error, result) => {
+      if (error) {
+        console.error('Error deleting contact:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the contact.' });
+      } else {
+        if (result.affectedRows > 0) {
+          console.log('Contact deleted successfully! Contact ID:', contactId);
+          res.status(200).json({ message: 'Contact deleted successfully!' });
+        } else {
+          res.status(404).json({ error: 'Contact not found or you do not have permission to delete this contact.' });
+        }
+      }
+    });
+  } else {
+    res.status(401).json({ error: 'User not authenticated.' });
+  }
+});
+
+
 
 
 

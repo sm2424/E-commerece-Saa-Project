@@ -327,7 +327,11 @@
                                                         <a href="#" class="editContactLink text-success"  data-contact-id="<%= eachData.id %>" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
                                                     </li>
                                                     <li>
-                                                      <a href="#" onclick="deleteContact(<%= index %>)">Delete</a>
+                                                      
+                                                        <a href="#" class="deleteContactLink" data-contact-id="<%= eachData.id %>">Delete</a>
+                                                    </li>
+                                                    
+                                                                                                          
                                                     </li>
                                                    
                                                   </ul>
@@ -351,6 +355,13 @@
                                             </div>
                                           </div>
                                         <% }); %>
+                                      </div>
+
+                                        <!-- Confirmation Popup -->
+                                      <div id="confirmationPopup" style="display: none;">
+                                        <p>Are you sure you want to delete this contact?</p>
+                                        <button id="confirmDeleteBtn">OK</button>
+                                        <button id="cancelDeleteBtn">Cancel</button>
                                       </div>
                                       
                                     </div>
@@ -502,7 +513,7 @@
         $('#contactsFormModal').modal('hide');
 
         // Refresh contact list
-        //refreshContactList();
+        refreshContactList();
             
           },
           error: function (error) {
@@ -624,6 +635,29 @@
         });
       });
 
+      $(document).on('click', '.deleteContactLink', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+    
+        var contactId = $(this).data('contact-id'); // Get the ID of the contact to delete
+    
+        // Perform AJAX POST request to delete the contact
+        $.ajax({
+            type: "POST",
+            url: "/delete_contact", // Update the URL to your endpoint for deleting contacts
+            data: { contactId: contactId },
+            success: function (response) {
+                console.log(response.message); // Log success message
+                // Optionally, perform additional actions such as showing a success message to the user
+                // Refresh the contact list after deletion
+                refreshContactList();
+            },
+            error: function (error) {
+                console.error('Error deleting contact:', error.responseJSON.error); // Log error message
+                // Optionally, display an error message to the user
+            }
+        });
+    });
+    
 
 
 
