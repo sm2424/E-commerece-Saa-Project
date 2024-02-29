@@ -93,16 +93,17 @@
               </div>
             </div>
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div  class="container-fluid">
               <div class="email-wrap bookmark-wrap">
                 <div class="row">
-                  <div class="col-xl-18 col-md-12 box-col-18">
+                  <div class="col-xl-12 col-md-12 box-col-12">
                     <div class="email-right-aside bookmark-tabcontent contacts-tabs">
                       <div class="card email-body radius-left dark-contact">
                         <div class="ps-0">
                           <div class="tab-content">
                             <div class="tab-pane fade active show" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
-                              <div class="card mb-0">
+                              
+                              <div id="contactsdata" class="card mb-0">
                                 
                                 <div class="card-header d-flex">
                                   <!-- Placeholder -->
@@ -273,7 +274,7 @@
                                 <span id="message"></span>
                                 <div class="card-body p-0">
                                   <div class="row list-persons" id="addcon">
-                                    <div class="col-xl-4 xl-50 col-md-5">
+                                    <div class="tabdata col-xl-4 xl-50 col-md-5">
                                       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         <% rows.forEach(function(eachData, index) { %>
                                           <a class="contact-tab-<%= index %> nav-link <%= index === 0 ? 'active' : '' %>"
@@ -322,7 +323,6 @@
                                                   </h5>
                                                   <p class="whatsapp_number<%= index %>"> <%= eachData.whatsapp_number %> </p>
                                                   <ul>
-                                                    
                                                     <li>
                                                         <a href="#" class="editContactLink text-success"  data-contact-id="<%= eachData.id %>" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
                                                     </li>
@@ -338,20 +338,21 @@
                                                 </div>
                                               </div>
                                               <div class="email-general">
+                                                
                                                 <h6 class="mb-3">General</h6>
                                                 <ul>
-                                                  <li>Full Name <span class="font-primary"> <%= eachData.full_name %> </span></li>
-                                                  <li>Whatsapp number <span class="font-primary"> <%= eachData.whatsapp_number %> </span></li>
-                                                  <li>Gender <span class="font-primary"> <%= eachData.gender %> </span></li>
-                                                  <li>Birthday <span class="font-primary"> <%= new Date(eachData.dob).toLocaleDateString('en-GB') %> </span></li> <!-- Format the date here -->
-                                                  <li>Address <span class="font-primary"> <%= eachData.address %> </span></li>
-                                                  <li>City <span class="font-primary"> <%= eachData.city %> </span></li>
-                                                  <li>State <span class="font-primary"> <%= eachData.state %> </span></li>
-                                                  <li>Country <span class="font-primary"> <%= eachData.country %> </span></li>
-                                                  <li>Pincode <span class="font-primary"> <%= eachData.pincode %> </span></li>
+                                                  <li>Full Name <span class= "full_name<%= index %> font-primary"> <%= eachData.full_name %> </span></li>
+                                                  <li>Whatsapp number <span class="whatsapp_number<%= index %> font-primary"> <%= eachData.whatsapp_number %> </span></li>
+                                                  <li>Gender <span class="gender<%= index %>  font-primary"> <%= eachData.gender %> </span></li>
+                                                  <li>Birthday <span class="dob<%= index %> font-primary"> <%= new Date(eachData.dob).toLocaleDateString('en-GB') %> </span></li> <!-- Format the date here -->
+                                                  <li>Address <span class="address<%= index %> font-primary"> <%= eachData.address %> </span></li>
+                                                  <li>City <span class="city<%= index %> font-primary"> <%= eachData.city %> </span></li>
+                                                  <li>State <span class="state<%= index %> font-primary"> <%= eachData.state %> </span></li>
+                                                  <li>Country <span class="country<%= index %> font-primary"> <%= eachData.country %> </span></li>
+                                                  <li>Pincode <span class="pincode<%= index %> font-primary"> <%= eachData.pincode %> </span></li>
 
                                                 </ul>
-                                              </div>
+                                              </div> 
                                             </div>
                                           </div>
                                         <% }); %>
@@ -367,7 +368,8 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              
+                            </div>
                             </div>
                             <!-- tab panel end -->
                           </div>
@@ -427,26 +429,84 @@
   src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     $(document).ready(function () {
-      // Function to refresh contact list
-  function refreshContactList() {
-    // Perform AJAX GET request to fetch updated contact list
-    $.ajax({
-      type: "GET",
-      url: "/fetch_contacts", // Endpoint to fetch contacts data
-      success: function (response) {
-        // Update the contact list with new data
-        $('.list-persons').html(response);
-      },
-      error: function (error) {
-        console.error('Error fetching contacts:', error);
-        // Optionally, display an error message to the user
+
+      //=> Refresh the contact list
+      function refreshContactList() {
+        $.ajax({
+          url: "/fetch_contacts",
+          type: "GET",
+          dataType: "json",
+          success: function (response) {
+            rows = [...response];
+            updatePageContent();
+            //updateContactsDataDiv(); // Update the contacts data div after refreshing the list
+          },
+          error: function (error) {
+            console.error('Error fetching contacts:', error);
+          }
+        });
       }
-    });
-  }
 
-      // Attach click event handler to the Add button
+      // Update the HTML content with the data from the rows array
+      function updatePageContent() {
+        rows.forEach(function (eachData, index) {
+          $(`.full_name${index}`).text(eachData.full_name);
+          $(`.whatsapp_number${index}`).text(eachData.whatsapp_number);
+          $(`.gender${index}`).text(eachData.gender);
+          //$(`.dob${index}`).text(eachData.dob); 
+          // Fetching the date from the database and creating a Date object
+          const dob = new Date(eachData.dob);
+
+          // Extracting the date, month, and year from the Date object
+          const day = dob.getDate();
+          const month = dob.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
+          const year = dob.getFullYear();
+
+          // Creating a formatted date string in the format "DD/MM/YYYY"
+          const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+
+          // Updating the HTML element with the formatted date
+          $(`.dob${index}`).text(formattedDate);
+          $(`.address${index}`).text(eachData.address);
+          $(`.city${index}`).text(eachData.city);
+          $(`.state${index}`).text(eachData.state);
+          $(`.country${index}`).text(eachData.country);
+          $(`.pincode${index}`).text(eachData.pincode);
+
+          // Update image initials (if applicable)
+          var nameParts = eachData.full_name.split(' ');
+          var initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
+          $(`.update_img_${index}`).text(initials);
+        });
+      }
+
+      // Function to update the contacts data div
+      function updateContactsDataDiv() {
+        var contactsDataHtml = ''; // Initialize HTML string
+        rows.forEach(function (eachData, index) {
+          contactsDataHtml += '<div>'; // Add container div for each contact
+          contactsDataHtml += `<p>Full Name: ${eachData.full_name}</p>`; // Add contact details
+          contactsDataHtml += `<p>WhatsApp Number: ${eachData.whatsapp_number}</p>`;
+          contactsDataHtml += `<p>Gender: ${eachData.gender}</p>`;
+          const dob = new Date(eachData.dob);
+          const day = dob.getDate();
+          const month = dob.getMonth() + 1;
+          const year = dob.getFullYear();
+          const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+          contactsDataHtml += `<p>Date of Birth: ${formattedDate}</p>`;
+          contactsDataHtml += `<p>Address: ${eachData.address}</p>`;
+          contactsDataHtml += `<p>City: ${eachData.city}</p>`;
+          contactsDataHtml += `<p>State: ${eachData.state}</p>`;
+          contactsDataHtml += `<p>Country: ${eachData.country}</p>`;
+          contactsDataHtml += `<p>Pincode: ${eachData.pincode}</p>`;
+          contactsDataHtml += '</div>'; // Close container div
+        });
+        $('#contactsdata').html(contactsDataHtml); // Update contacts data div
+      }
+      
+      
+      //=>  Add button
       $("#addContactBtn").click(function () {
-
         // Retrieve values of the required fields
         var fullName = $("#contactFullName").val().trim();
         var whatsappNumber = $("#contactWhatsappNumber").val().trim();
@@ -472,13 +532,18 @@
 
 
         // Determine the gender label based on the selected radio button
-        var gender = $("input[name='contactGender']:checked").val() === 'contactGenderMale' ? 'Female' : 'Male';
+        var gender = $("input[name='contactGender']:checked").val();
+        // If no gender is selected, default to Male
+        if (!gender) {
+          gender = 'Male';
+        } else {
+          // If a gender is selected, get the corresponding label
+          gender = $("input[name='contactGender']:checked").siblings('span').text();
+        }
 
         // Combine day, month, and year into a single date format
         var dob = birthYear + '-' + birthMonth + '-' + birthDay;
 
-
-        // Prepare data to be sent to the server
         var formData = {
           fullName: fullName,
           whatsappNumber: whatsappNumber,
@@ -491,55 +556,40 @@
           pincode: pincode
         };
 
-        // Perform AJAX POST request to add the contact
         $.ajax({
           type: "POST",
           url: "/add_contact",
           data: formData,
           success: function (response) {
-            // Log success message and the index of the newly added contact
             console.log(response.message);
             console.log('New Contact ID:', response.newIndex);
-            // Optionally, you can perform additional actions here, such as showing a success message to the user
-            $('#successMessage').show(); // Show success message
-            $('#contactsFormModal').modal('hide'); // Hide the modal
+            $('#successMessage').show(); 
+            $('#contactsFormModal').modal('hide'); 
+            setTimeout(function () {
+              $('#successMessage').hide();
+            }, 1000);
+            $('#contactsFormModal').modal('hide');
 
-            
-            setTimeout(function() {
-            $('#successMessage').hide(); 
-            }, 1000); 
+            refreshContactList();
 
-            // Close the modal
-        $('#contactsFormModal').modal('hide');
-
-        // Refresh contact list
-        refreshContactList();
-            
           },
           error: function (error) {
-            // Log error message if the request fails
             console.error('Error adding contact:', error.responseJSON.error);
-            // Optionally, you can display an error message to the user
           }
         });
       });
 
-      // Event listener for the Edit link
+      //=> Edit link
       var currentContactId; // Variable to store the current contact ID
       $(document).on('click', '.editContactLink', function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        $('#contactsFormModal').modal('show'); // Show the modal
-
-
+        e.preventDefault(); 
+        $('#contactsFormModal').modal('show'); 
         currentContactId = $(this).data('contact-id'); // Store the current contact ID
         console.log('Contact ID:', currentContactId);
 
-       
-
-        // Perform AJAX GET request to fetch contact details based on contact ID
         $.ajax({
           type: "GET",
-          url: "/get_contact_details", // Update the URL to your endpoint
+          url: "/get_contact_details", 
           data: { contactId: currentContactId },
           success: function (response) {
             var contactDetails = response.contactDetails;
@@ -567,27 +617,24 @@
 
           },
           error: function (error) {
-
             console.error('Error fetching contact details:', error);
-
           }
         });
-        $('#addcontact').hide();
-        $('#editcontact').show();
-        $('#addContactBtn').hide();
-        $('#SaveContactBtn').show();
-      });
+          $('#addcontact').hide();
+          $('#editcontact').show();
+          $('#addContactBtn').hide();
+          $('#SaveContactBtn').show();
+        });
 
-      $("#add_data").click(function () {
-
-        $('#addcontact').show();
-        $('#editcontact').hide();
-        $('#addContactBtn').show();
-        $('#SaveContactBtn').hide();
+        $("#add_data").click(function () {
+          $('#addcontact').show();
+          $('#editcontact').hide();
+          $('#addContactBtn').show();
+          $('#SaveContactBtn').hide();
       });
-      // Event listener for the "Save" button
+        
+      //=> "Save" button
       $("#SaveContactBtn").click(function () {
-        // Retrieve the updated values from the form fields
         var fullName = $("#contactFullName").val().trim();
         var whatsappNumber = $("#contactWhatsappNumber").val().trim();
         var gender = $("input[name='contactGender']:checked").val();
@@ -618,56 +665,40 @@
           contactId: currentContactId // Use the stored contact ID
         };
 
-        // Perform an AJAX POST request to update the contact data
         $.ajax({
           type: "POST",
-          url: "/update_contact", // Change the URL to your endpoint for updating contacts
+          url: "/update_contact", 
           data: updatedData,
           success: function (response) {
-            console.log(response.message); // Log success message
-            // Optionally, perform additional actions such as showing a success message to the user
+            console.log(response.message); 
             $('#contactsFormModal').modal('hide');
+            refreshContactList();
           },
           error: function (error) {
-            console.error('Error updating contact:', error.responseJSON.error); // Log error message
-            // Optionally, display an error message to the user
+            console.error('Error updating contact:', error.responseJSON.error); 
           }
         });
       });
 
+      //=> Delete the contact data
       $(document).on('click', '.deleteContactLink', function (e) {
-        e.preventDefault(); // Prevent default link behavior
-    
-        var contactId = $(this).data('contact-id'); // Get the ID of the contact to delete
-    
-        // Perform AJAX POST request to delete the contact
+        e.preventDefault(); 
+        var contactId = $(this).data('contact-id'); 
         $.ajax({
-            type: "POST",
-            url: "/delete_contact", // Update the URL to your endpoint for deleting contacts
-            data: { contactId: contactId },
-            success: function (response) {
-                console.log(response.message); // Log success message
-                // Optionally, perform additional actions such as showing a success message to the user
-                // Refresh the contact list after deletion
-                refreshContactList();
-            },
-            error: function (error) {
-                console.error('Error deleting contact:', error.responseJSON.error); // Log error message
-                // Optionally, display an error message to the user
-            }
+          type: "POST",
+          url: "/delete_contact", 
+          data: { contactId: contactId },
+          success: function (response) {
+            console.log(response.message); 
+            refreshContactList();
+          },
+          error: function (error) {
+            console.error('Error deleting contact:', error.responseJSON.error); 
+          }
         });
+      });
+      refreshContactList();
     });
-    
-
-
-
-
-
-    });
-
-
-
-
   </script>
 </body>
 </html>
